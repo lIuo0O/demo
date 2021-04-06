@@ -1,0 +1,6 @@
+".\Output\Main.obj",
+".\Output\ISR.obj",
+".\Output\STARTUP.obj",
+".\Output\OPTIONS_SN8F5702.obj" 
+TO ".\Output\ISR" 
+PRINT(".\LST\ISR.m51") RAMSIZE(256) 

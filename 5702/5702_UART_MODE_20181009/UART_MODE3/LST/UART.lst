@@ -1,0 +1,241 @@
+C51 COMPILER V9.56.0.0   UART                                                              09/30/2018 15:08:39 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE UART
+OBJECT MODULE PLACED IN .\Output\UART.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE SRC\UART.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\SRC) DEBUG OBJECTEXTEND PRI
+                    -NT(.\LST\UART.lst) TABS(2) OBJECT(.\Output\UART.obj)
+
+line level    source
+
+   1          #include "UART.h"                     
+   2          #include "Timer0.h"
+   3          
+   4          
+   5          bit f_rx = 0;                                                             //正在接收标志位
+   6          idata uint8_t r_check_model = L_CHECK_MODEL;                              //校验模式
+   7          idata uint8_t r_uart_rx_length = 0;                                       //该笔数据接收的长度
+   8          idata uint8_t r_uart_rx_lengthbuf = 0;                                    //接收数据缓存buf,用于判断是否接收�
+             -�成
+   9          idata uint8_t r_urat_rx_data[L_RX_LENGTH] = {0};                          //接收到的数据缓存
+  10          idata uint8_t r_urat_tx_data[L_TX_LENGTH] = {0};                          //发生数据缓存,该Demo中未使用
+  11          
+  12          //========================================================================================================
+             -=====//
+  13          // UART init
+  14          //========================================================================================================
+             -=====//
+  15          void UART3init(void)
+  16          {
+  17   1        P05 = 1;
+  18   1        P0M |= 0x20;                                  //UTX初始化输出高 
+  19   1        P0M &= 0xbf;                                  //URX初始化数模模式
+  20   1        
+  21   1        SM0 = 1;                                      //模式3
+  22   1        SM1 = 1;
+  23   1        REN0 = 1;                                     //使能接收功能
+  24   1        switch (L_BRUD_RATE)                          //波特率设置
+  25   1        {
+  26   2          case L_BRUD_RATE_4800:
+  27   2               PCON &= 0x7f;                                
+  28   2               BD = 1;        
+  29   2               S0RELH = L_S0RELH_4800;
+  30   2               S0RELL = L_S0RELL_4800;                  
+  31   2            break;    
+  32   2          case L_BRUD_RATE_9600:
+  33   2               PCON &= 0x7f;                                
+  34   2               BD = 1;        
+  35   2               S0RELH = L_S0RELH_9600;
+  36   2               S0RELL = L_S0RELL_9600;                  
+  37   2            break;
+  38   2          case L_BRUD_RATE_19200:
+  39   2               PCON &= 0x7f;                                
+  40   2               BD = 1;        
+  41   2               S0RELH = L_S0RELH_19200;
+  42   2               S0RELL = L_S0RELL_19200;                     
+  43   2            break;
+  44   2          case L_BRUD_RATE_38400:
+  45   2               PCON &= 0x7f;                                
+  46   2               BD = 1;        
+  47   2               S0RELH = L_S0RELH_38400;
+  48   2               S0RELL = L_S0RELL_38400;                     
+  49   2            break;
+  50   2          case L_BRUD_RATE_56000:
+  51   2               PCON |= 0x80; 
+C51 COMPILER V9.56.0.0   UART                                                              09/30/2018 15:08:39 PAGE 2   
+
+  52   2               BD = 1;    
+  53   2               S0RELH = L_S0RELH_56000;
+  54   2               S0RELL = L_S0RELL_56000;                                                       
+  55   2            break;
+  56   2          case L_BRUD_RATE_57600:
+  57   2               PCON |= 0x80;   
+  58   2               BD = 1;      
+  59   2               S0RELH = L_S0RELH_57600;
+  60   2               S0RELL = L_S0RELL_57600;                                               
+  61   2            break;
+  62   2          case L_BRUD_RATE_115200:
+  63   2               PCON |= 0x80;  
+  64   2               BD = 1;      
+  65   2               S0RELH = L_S0RELH_115200;
+  66   2               S0RELL = L_S0RELL_115200;                                                  
+  67   2            break;
+  68   2          case L_BRUD_RATE_128000:
+  69   2               PCON |= 0x80;                                
+  70   2               BD = 1;        
+  71   2               S0RELH = L_S0RELH_128000;
+  72   2               S0RELL = L_S0RELL_128000;                      
+  73   2            break;  
+  74   2          case L_BRUD_RATE_250000:
+  75   2               PCON |= 0x80;                                
+  76   2               BD = 1;      
+  77   2               S0RELH = L_S0RELH_250000;
+  78   2               S0RELL = L_S0RELL_250000;                        
+  79   2            break;      
+  80   2          default:
+  81   2            break;
+  82   2        }
+  83   1        ES0 = 1;                                            //使能UART中断
+  84   1      }
+  85          
+  86          void UARTwriteonebyte(uint8_t r_txdata)
+  87          {
+  88   1        uint8_t i = 0;
+  89   1        uint8_t temp_check = 0;
+  90   1        uint8_t temp_number = 0;
+  91   1        
+  92   1        temp_check = r_txdata;
+  93   1        
+  94   1        for(i=0;i<8;i++)                                    //判读发送数据‘1’的个数
+  95   1        {
+  96   2          if(temp_check & 0x01)
+  97   2            temp_number++;
+  98   2          temp_check = _crol_(temp_check,1);                //右位判断下一位数据是否为‘1’
+  99   2        }
+ 100   1        
+ 101   1        if(r_check_model == L_UNEVEN_CHECK)                 //奇校验
+ 102   1        {
+ 103   2          if(temp_number & 0x01)                            //第9位,奇偶校验的值
+ 104   2            TB80 = 0;
+ 105   2          else
+ 106   2            TB80 = 1;
+ 107   2        }
+ 108   1        else if(r_check_model == L_EVEN_CHECK)              //偶校验
+ 109   1        {
+ 110   2          if(temp_number & 0x01)                            //第9位,奇偶校验的值
+ 111   2            TB80 = 1;
+ 112   2          else
+ 113   2            TB80 = 0; 
+C51 COMPILER V9.56.0.0   UART                                                              09/30/2018 15:08:39 PAGE 3   
+
+ 114   2        }
+ 115   1        
+ 116   1        S0BUF = r_txdata;
+ 117   1        while(!TI0);                                        //等待发送完成
+ 118   1        TI0 = 0;
+ 119   1      }
+ 120          
+ 121          //========================================================================================================
+             -=====//
+ 122          // UART respond 若在接收状态,5ms判断一次数据是否接收完成,若接收完数据据后,将接
+             -收到的数据数据再发生出去
+ 123          //========================================================================================================
+             -=====//
+ 124          void UARTrespond(void)
+ 125          {
+ 126   1        uint8_t i = 0;
+ 127   1        if(f_1ms == 1)
+ 128   1        {
+ 129   2          f_1ms = 0;
+ 130   2          if((--r_timer_5ms) == 0)                            
+ 131   2          {
+ 132   3            r_timer_5ms = L_TIMER_5MS;
+ 133   3            if(f_rx == 1)                                             //5ms判断一次是否在接收数据状态,该时间根据设置�
+             -��波特率不同进行修改
+ 134   3            {
+ 135   4              if(r_uart_rx_length == r_uart_rx_lengthbuf)             //判断该帧数据是否接收完,若接收完�
+             -�接收到的数据再发送出去    
+ 136   4              {
+ 137   5                f_rx = 0;
+ 138   5                
+ 139   5                for(i=0;i<r_uart_rx_length;i++)
+ 140   5                {
+ 141   6                  UARTwriteonebyte(r_urat_rx_data[i]);
+ 142   6                }
+ 143   5                
+ 144   5                r_uart_rx_length = 0;
+ 145   5                r_uart_rx_lengthbuf = 0;
+ 146   5              }
+ 147   4              else                                                    
+ 148   4              {
+ 149   5                r_uart_rx_lengthbuf = r_uart_rx_length; 
+ 150   5              }
+ 151   4            }
+ 152   3          }
+ 153   2        }
+ 154   1      }
+ 155          
+ 156          //========================================================================================================
+             -=====//
+ 157          // UART ISR
+ 158          //========================================================================================================
+             -=====//
+ 159          void UARTISR(void) interrupt ISRUart 
+ 160          {
+ 161   1        uint8_t i = 0;
+ 162   1        uint8_t temp_check = 0;
+ 163   1        uint8_t temp_number = 0;
+ 164   1      
+ 165   1        if(RI0 == 1)                                            //RI0软件清零
+ 166   1        {
+ 167   2          RI0 = 0;
+ 168   2          f_rx = 1;                                             //置接收标志位
+C51 COMPILER V9.56.0.0   UART                                                              09/30/2018 15:08:39 PAGE 4   
+
+ 169   2          temp_check = S0BUF;
+ 170   2          
+ 171   2          for(i=0;i<8;i++)                                      //判断接收数据‘1’的个数
+ 172   2          {
+ 173   3            if((temp_check & 0x01) == 1)
+ 174   3              temp_number++;
+ 175   3            temp_check = _crol_(temp_check,1);
+ 176   3          }
+ 177   2          
+ 178   2          if(RB80 == 1)                                         //第9位奇偶校验
+ 179   2            temp_number++;
+ 180   2          
+ 181   2          if(r_check_model == L_UNEVEN_CHECK)                   //奇校验
+ 182   2          {
+ 183   3            if(temp_number & 0x01)
+ 184   3              r_urat_rx_data[r_uart_rx_length++] = temp_check;
+ 185   3          }
+ 186   2          else if(r_check_model == L_EVEN_CHECK)                //偶校验
+ 187   2          {
+ 188   3            if(!(temp_number & 0x01))
+ 189   3              r_urat_rx_data[r_uart_rx_length++] = temp_check;    
+ 190   3          }
+ 191   2          else                                                  //直接存储接收数据,若选择奇偶校验该else语句可以不需�
+             -�
+ 192   2          {
+ 193   3            r_urat_rx_data[r_uart_rx_length++] = temp_check;    
+ 194   3          }
+ 195   2          
+ 196   2        }
+ 197   1      }
+ 198          
+ 199          
+ 200          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    414    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =     43    ----
+   BIT SIZE         =      1    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

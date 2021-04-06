@@ -1,0 +1,25 @@
+﻿<?xml version="1.0"?>
+  <dpinst>
+    <search>
+      <subDirectory>*</subDirectory>
+    </search>
+
+    <language code="0x804">
+      <dpinstTitle>【驱动天空】程序安装程序</dpinstTitle>
+      <welcomeTitle>驱动天空驱动程序安装程序</welcomeTitle>
+      <welcomeIntro>
+安装程序将开始把驱动文件安装到系统，点下一步等待完成即可。	  
+如果有出现安装失败，请到网站上留言给我，感谢支持。
+	  
+～～来自驱动天空 www.drvsky.com～～
+	  </welcomeIntro>
+      <installHeaderTitle>正在安装设备的驱动...</installHeaderTitle>
+      <finishTitle>安装结束。</finishTitle>
+      <finishText>设备驱动成功安装。</finishText>
+    </language>
+
+    <headerPath>Data\header.bmp</headerPath>
+    <watermarkPath>Data\Watermark.bmp</watermarkPath>
+
+     <forceIfDriverIsNotBetter/>
+</dpinst>

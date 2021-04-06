@@ -1,0 +1,7 @@
+".\Objects\STARTUP.obj",
+".\Objects\OPTIONS_SN8F5702.obj",
+".\Objects\main.obj",
+".\Objects\i2c_master.obj",
+".\Objects\eeprom.obj" 
+TO ".\Objects\eeprom" 
+PRINT(".\Listings\eeprom.m51") RAMSIZE(256) 

@@ -1,0 +1,271 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        09/30/2018  13:42:29  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\STARTUP.obj, .\Objects\ISP.obj, .\Objects\Main.obj, .\Objects\OPTIONS_SN8F5702.obj
+>>  TO .\Objects\ISP PRINT (.\Listings\ISP.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\STARTUP.obj (?C_STARTUP)
+  .\Objects\ISP.obj (ISP)
+  .\Objects\Main.obj (MAIN)
+  .\Objects\OPTIONS_SN8F5702.obj (OPTIONS_SN8F5702)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  .\Objects\ISP (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            IDATA   0008H     0062H     UNIT         ?ID?ISP
+            IDATA   006AH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     008CH     UNIT         ?C_C51STARTUP
+            CODE    008FH     006EH     UNIT         ?C_INITSEG
+            CODE    00FDH     0040H     UNIT         ?PR?ISPPAGEREAD2?ISP
+            CODE    013DH     0025H     UNIT         ?PR?ISPPAGEREAD1?ISP
+            CODE    0162H     0023H     UNIT         ?PR?SYSTEMINIT?MAIN
+            CODE    0185H     001EH     UNIT         ?PR?MAIN?MAIN
+            CODE    01A3H     001AH     UNIT         ?PR?ISPINIT?ISP
+            CODE    01BDH     0014H     UNIT         ?PR?_ISPPAGEWRITE?ISP
+                    01D1H     0CEFH                  *** GAP ***
+            CODE    0EC0H     0020H     ABSOLUTE     
+                    0EE0H     0116H                  *** GAP ***
+            CODE    0FF6H     000AH     ABSOLUTE     
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\ISP (?C_STARTUP)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?MAIN
+  +--> ?C_INITSEG
+
+?PR?MAIN?MAIN
+  +--> ?PR?SYSTEMINIT?MAIN
+  +--> ?PR?ISPINIT?ISP
+  +--> ?PR?_ISPPAGEWRITE?ISP
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/30/2018  13:42:29  PAGE 2
+
+
+  +--> ?PR?ISPPAGEREAD1?ISP
+  +--> ?PR?ISPPAGEREAD2?ISP
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\ISP (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:0003H         SEGMENT       ?C_C51STARTUP
+  I:006AH         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:0006H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:0003H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:0003H         LINE#         133
+  C:0005H         LINE#         134
+  C:0006H         LINE#         135
+  C:0007H         LINE#         136
+  C:0009H         LINE#         185
+  C:000CH         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        ISP
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00A8H         PUBLIC        IEN0
+  D:00B8H         PUBLIC        IEN1
+  D:00D8H         PUBLIC        S0CON2
+  I:0008H         PUBLIC        r_read_rom_addr
+  C:0EC0H         PUBLIC        r_rom_data
+  C:01A3H         PUBLIC        ISPinit
+  I:000AH         PUBLIC        r_isp_write_data
+  D:0088H         PUBLIC        TCON
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/30/2018  13:42:29  PAGE 3
+
+
+  C:01BDH         PUBLIC        _ISPpagewrite
+  D:0086H         PUBLIC        WDTR
+  I:002AH         PUBLIC        r_isp_read_data1
+  D:0096H         PUBLIC        PEROMH
+  I:004AH         PUBLIC        r_isp_read_data2
+  D:0095H         PUBLIC        PEROML
+  C:013DH         PUBLIC        ISPpageread1
+  C:00FDH         PUBLIC        ISPpageread2
+  D:0098H         PUBLIC        S0CON
+  D:00C8H         PUBLIC        T2CON
+  D:0094H         PUBLIC        PECMD
+  D:0097H         PUBLIC        PERAM
+  D:00D0H         PUBLIC        PSW
+  D:00C0H         PUBLIC        IRCON
+  -------         PROC          ISPINIT
+  -------         DO            
+  D:0007H         SYMBOL        i
+  -------         ENDDO         
+  C:01A3H         LINE#         29
+  C:01A3H         LINE#         30
+  C:01A3H         LINE#         31
+  C:01A5H         LINE#         32
+  C:01A5H         LINE#         33
+  C:01A5H         LINE#         34
+  C:01B8H         LINE#         35
+  C:01BCH         LINE#         36
+  -------         ENDPROC       ISPINIT
+  -------         PROC          _ISPPAGEWRITE
+  D:0001H         SYMBOL        r_ram_address
+  C:01BDH         LINE#         41
+  C:01BDH         LINE#         42
+  C:01BDH         LINE#         43
+  C:01C0H         LINE#         44
+  C:01C4H         LINE#         45
+  C:01C7H         LINE#         46
+  C:01CAH         LINE#         47
+  C:01CDH         LINE#         48
+  C:01D0H         LINE#         49
+  -------         ENDPROC       _ISPPAGEWRITE
+  -------         PROC          ISPPAGEREAD1
+  -------         DO            
+  D:0007H         SYMBOL        i
+  -------         ENDDO         
+  C:013DH         LINE#         54
+  C:013DH         LINE#         55
+  C:013DH         LINE#         56
+  C:013FH         LINE#         57
+  C:013FH         LINE#         58
+  C:013FH         LINE#         59
+  C:015DH         LINE#         60
+  C:0161H         LINE#         61
+  -------         ENDPROC       ISPPAGEREAD1
+  -------         PROC          ISPPAGEREAD2
+  -------         DO            
+  D:0005H         SYMBOL        i
+  -------         ENDDO         
+  C:00FDH         LINE#         66
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/30/2018  13:42:29  PAGE 4
+
+
+  C:00FDH         LINE#         67
+  C:00FDH         LINE#         68
+  C:00FFH         LINE#         69
+  C:00FFH         LINE#         70
+  C:00FFH         LINE#         71
+  C:0138H         LINE#         72
+  C:013CH         LINE#         73
+  -------         ENDPROC       ISPPAGEREAD2
+  -------         ENDMOD        ISP
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00A8H         PUBLIC        IEN0
+  D:00B8H         PUBLIC        IEN1
+  D:00D8H         PUBLIC        S0CON2
+  C:0185H         PUBLIC        main
+  D:00F1H         PUBLIC        P0UR
+  D:00F2H         PUBLIC        P1UR
+  D:00F3H         PUBLIC        P2UR
+  D:00E6H         PUBLIC        CLKCMD
+  D:0088H         PUBLIC        TCON
+  C:0162H         PUBLIC        Systeminit
+  D:00E5H         PUBLIC        CLKSEL
+  D:0086H         PUBLIC        WDTR
+  D:00F9H         PUBLIC        P0M
+  D:00FAH         PUBLIC        P1M
+  D:00FBH         PUBLIC        P2M
+  D:0098H         PUBLIC        S0CON
+  D:00C8H         PUBLIC        T2CON
+  D:008EH         PUBLIC        CKCON
+  D:00D0H         PUBLIC        PSW
+  D:00C0H         PUBLIC        IRCON
+  -------         PROC          MAIN
+  C:0185H         LINE#         10
+  C:0185H         LINE#         11
+  C:0185H         LINE#         12
+  C:0188H         LINE#         13
+  C:018BH         LINE#         14
+  C:0194H         LINE#         15
+  C:0197H         LINE#         16
+  C:0198H         LINE#         17
+  C:0199H         LINE#         18
+  C:019AH         LINE#         19
+  C:019BH         LINE#         20
+  C:019EH         LINE#         21
+  C:019EH         LINE#         22
+  C:019EH         LINE#         23
+  C:01A1H         LINE#         24
+  -------         ENDPROC       MAIN
+  -------         PROC          SYSTEMINIT
+  C:0162H         LINE#         31
+  C:0162H         LINE#         32
+  C:0162H         LINE#         36
+  C:0165H         LINE#         37
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/30/2018  13:42:29  PAGE 5
+
+
+  C:0168H         LINE#         38
+  C:016BH         LINE#         42
+  C:016EH         LINE#         46
+  C:0171H         LINE#         47
+  C:0173H         LINE#         48
+  C:0176H         LINE#         50
+  C:0178H         LINE#         51
+  C:017AH         LINE#         52
+  C:017DH         LINE#         54
+  C:017FH         LINE#         55
+  C:0181H         LINE#         56
+  C:0184H         LINE#         57
+  -------         ENDPROC       SYSTEMINIT
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        OPTIONS_SN8F5702
+  N:000EH         SYMBOL        CLOCKSRC_SET
+  N:0006H         SYMBOL        LVDMODE_SET
+  N:0030H         SYMBOL        RESETPIN_SET
+  N:1000H         SYMBOL        ROM_SIZE
+  N:0001H         SYMBOL        SECURITY_SET
+  N:00C0H         SYMBOL        WATCHCLK_SET
+  N:0050H         SYMBOL        WATCHDOG_SET
+  -------         ENDMOD        OPTIONS_SN8F5702
+
+Program Size: data=107.0 xdata=0 code=507
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

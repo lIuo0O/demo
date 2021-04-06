@@ -1,0 +1,7 @@
+".\Objects\main.obj",
+".\Objects\system.obj",
+".\Objects\lcd.obj",
+".\Objects\key.obj",
+".\Objects\OPTIONS_SN8F5804.obj" 
+TO ".\Objects\t12864_v1" 
+PRINT(".\Listings\t12864_v1.m51") RAMSIZE(256) 

@@ -1,0 +1,84 @@
+C51 COMPILER V9.56.0.0   MAIN                                                              09/30/2018 15:04:40 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Output\Main.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE SRC\Main.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\SRC) DEBUG OBJECTEXTEND PRI
+                    -NT(.\LST\Main.lst) TABS(2) OBJECT(.\Output\Main.obj)
+
+line level    source
+
+   1          //Program Size: data=52.2 xdata=0 code=579
+   2          //HexConvertVer = V22
+   3          //CheckSum = 0xB3E8
+   4          //2018.08.27_V2.2
+   5          #include "Main.h"
+   6          #include "UART.h"
+   7          #include "Timer0.h"
+   8          
+   9          //========================================================================================================
+             -=====//
+  10          // main loop
+  11          //========================================================================================================
+             -=====//
+  12          void main(void)
+  13          {
+  14   1        Systeminit();                                         //系统初始化
+  15   1        Timer0init();                                         //T0初始化
+  16   1        UART1init();                                          //UART1初始化
+  17   1        EAL = 1;                                              //使能总中断
+  18   1        while(1)
+  19   1        {
+  20   2          WDTR = 0x5a;
+  21   2          UARTrespond();                                      
+  22   2        } 
+  23   1      }
+  24          
+  25          //========================================================================================================
+             -=====//
+  26          // System init
+  27          //========================================================================================================
+             -=====//
+  28          void Systeminit(void)
+  29          {
+  30   1      //系统时钟寄存器,From 最大跑8M  
+  31   1      //====================================================================================//
+  32   1        CLKSEL = 0x07;                                        // Fcpu = 32M/2 = 16M
+  33   1        CLKCMD = 0x69;        
+  34   1        CKCON = 0x30;                                         // From = 8M
+  35   1        
+  36   1      //清看门狗
+  37   1      //====================================================================================//  
+  38   1        WDTR = 0x5A;                                           // clear watchdog  
+  39   1      
+  40   1      //GPIO初始化, UTX(P05)初始化输出高,URX(P06)初始化输入上拉模式
+  41   1      //====================================================================================//  
+  42   1        P0 = 0x20;
+  43   1        P0M = 0x20;
+  44   1        P0UR = 0xff;
+  45   1        
+  46   1        P1 = 0;
+  47   1        P1M = 0;
+  48   1        P1UR = 0xff;
+  49   1        
+  50   1        P2 = 0;
+C51 COMPILER V9.56.0.0   MAIN                                                              09/30/2018 15:04:40 PAGE 2   
+
+  51   1        P2M = 0;
+  52   1        P2UR = 0xff;
+  53   1          
+  54   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     56    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,580 @@
+C51 COMPILER V9.56.0.0   MAIN                                                              03/01/2021 16:54:12 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\software\keil5\C51\BIN\C51.EXE ..\c\main.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\c;..\h) DEBUG OBJE
+                    -CTEXTEND CODE LISTINCLUDE SYMBOLS PRINT(.\Listings\main.lst) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <sn8f5804.h>
+   1      =1  /*--------------------------------------------------------------------------
+   2      =1  SN8F5804.H
+   3      =1  
+   4      =1  Header file for SNOiX SN8F5804 microcontroller.
+   5      =1  Copyright (c) 2015 SONiX Technology Co., Ltd.
+   6      =1  
+   7      =1  Version 1.0    2015-08-19
+   8      =1  Version 1.3    2015-09-09
+   9      =1  Version 1.7    2015-10-14
+  10      =1  --------------------------------------------------------------------------*/
+  11      =1  
+  12      =1  #ifndef __SN8F5804_H__
+  13      =1  #define __SN8F5804_H__
+  14      =1  
+  15      =1  /*      Register      */
+  16      =1  sfr     P0       = 0x80;
+  17      =1    sbit  P07      = P0^7;
+  18      =1    sbit  P06      = P0^6;
+  19      =1    sbit  P05      = P0^5;
+  20      =1    sbit  P04      = P0^4;
+  21      =1    sbit  P03      = P0^3;
+  22      =1    sbit  P02      = P0^2;
+  23      =1    sbit  P01      = P0^1;
+  24      =1    sbit  P00      = P0^0;
+  25      =1  sfr     SP       = 0x81;
+  26      =1  sfr     DPL      = 0x82;
+  27      =1  sfr     DPH      = 0x83;
+  28      =1  sfr     WDTR     = 0x86;
+  29      =1  sfr     PCON     = 0x87;
+  30      =1  sfr     TCON     = 0x88;
+  31      =1    sbit  TF1      = TCON^7;
+  32      =1    sbit  TR1      = TCON^6;
+  33      =1    sbit  TF0      = TCON^5;
+  34      =1    sbit  TR0      = TCON^4;
+  35      =1    sbit  IE1      = TCON^3;
+  36      =1    sbit  IE0      = TCON^1;
+  37      =1  sfr     TMOD     = 0x89;
+  38      =1  sfr     TL0      = 0x8A;
+  39      =1  sfr     TL1      = 0x8B;
+  40      =1  sfr     TH0      = 0x8C;
+  41      =1  sfr     TH1      = 0x8D;
+  42      =1  sfr     CKCON    = 0x8E;
+  43      =1  sfr     PEDGE    = 0x8F;
+  44      =1  sfr     P1       = 0x90;
+  45      =1    sbit  P17      = P1^7;
+  46      =1    sbit  P16      = P1^6;
+  47      =1    sbit  P15      = P1^5;
+  48      =1    sbit  P14      = P1^4;
+  49      =1    sbit  P13      = P1^3;
+  50      =1    sbit  P12      = P1^2;
+  51      =1    sbit  P11      = P1^1;
+  52      =1    sbit  P10      = P1^0;
+  53      =1  sfr     P1W      = 0x91;
+C51 COMPILER V9.56.0.0   MAIN                                                              03/01/2021 16:54:12 PAGE 2   
+
+  54      =1  sfr     DPC      = 0x93;
+  55      =1  sfr     PECMD    = 0x94;
+  56      =1  sfr16   PEROM    = 0x95;
+  57      =1  sfr     PEROML   = 0x95;
+  58      =1  sfr     PEROMH   = 0x96;
+  59      =1  sfr     PERAM    = 0x97;
+  60      =1  sfr     S0CON    = 0x98;
+  61      =1    sbit  SM0      = S0CON^7;
+  62      =1    sbit  SM1      = S0CON^6;
+  63      =1    sbit  SM20     = S0CON^5;
+  64      =1    sbit  REN0     = S0CON^4;
+  65      =1    sbit  TB80     = S0CON^3;
+  66      =1    sbit  RB80     = S0CON^2;
+  67      =1    sbit  TI0      = S0CON^1;
+  68      =1    sbit  RI0      = S0CON^0;
+  69      =1  sfr     S0BUF    = 0x99;
+  70      =1  sfr     IEN2     = 0x9A;
+  71      =1  sfr     P0CON    = 0x9E;
+  72      =1  sfr     P1CON    = 0x9F;
+  73      =1  sfr     P2       = 0xA0;
+  74      =1    sbit  P27      = P2^7;
+  75      =1    sbit  P26      = P2^6;
+  76      =1    sbit  P25      = P2^5;
+  77      =1    sbit  P24      = P2^4;
+  78      =1    sbit  P23      = P2^3;
+  79      =1    sbit  P22      = P2^2;
+  80      =1    sbit  P21      = P2^1;
+  81      =1    sbit  P20      = P2^0;
+  82      =1  sfr     LCDCON   = 0xA1;
+  83      =1  sfr     LCDMOD   = 0xA2;
+  84      =1  sfr     LCDSEG   = 0xA3;
+  85      =1  sfr     LCDBUF   = 0xA4;
+  86      =1  sfr     LCDADR   = 0xA5;
+  87      =1  sfr     CSCON    = 0xA6;
+  88      =1  sfr     CSMOD    = 0xA7;
+  89      =1  sfr     IEN0     = 0xA8;
+  90      =1    sbit   EAL     = IEN0^7;
+  91      =1    sbit   ET2     = IEN0^5;
+  92      =1    sbit   ES0     = IEN0^4;
+  93      =1    sbit   ET1     = IEN0^3;
+  94      =1    sbit   EX1     = IEN0^2;
+  95      =1    sbit   ET0     = IEN0^1;
+  96      =1    sbit   EX0     = IEN0^0;
+  97      =1  sfr     IP0      = 0xA9;
+  98      =1  sfr     S0RELL   = 0xAA;
+  99      =1  sfr     PW1M     = 0xAB;
+ 100      =1  sfr16   PW1Y     = 0xAC;
+ 101      =1  sfr     PW1YL    = 0xAC;
+ 102      =1  sfr     PW1YH    = 0xAD;
+ 103      =1  sfr16   PW1B     = 0xAE;
+ 104      =1  sfr     PW1BL    = 0xAE;
+ 105      =1  sfr     PW1BH    = 0xAF;
+ 106      =1  sfr     P3       = 0xB0;
+ 107      =1    sbit  P31      = P3^1;
+ 108      =1    sbit  P30      = P3^0;
+ 109      =1  sfr     CSC      = 0xB1;
+ 110      =1  sfr     CYC      = 0xB2;
+ 111      =1  sfr     ACNT     = 0xB3;
+ 112      =1  sfr     BCNT     = 0xB4;
+ 113      =1  sfr     CCNT     = 0xB5;
+ 114      =1  sfr     DCNT     = 0xB6;
+ 115      =1  sfr     PWFLM    = 0xB7;
+C51 COMPILER V9.56.0.0   MAIN                                                              03/01/2021 16:54:12 PAGE 3   
+
+ 116      =1  sfr     IEN1     = 0xB8;
+ 117      =1    sbit  ET2RL    = IEN1^7;
+ 118      =1    sbit  ET2C3    = IEN1^5;
+ 119      =1    sbit  ET2C2    = IEN1^4;
+ 120      =1    sbit  ET2C1    = IEN1^3;
+ 121      =1    sbit  ET2C0    = IEN1^2;
+ 122      =1    sbit  ESPI     = IEN1^1;
+ 123      =1    sbit  EI2C     = IEN1^0;
+ 124      =1  sfr     IP1      = 0xB9;
+ 125      =1  sfr     S0RELH   = 0xBA;
+ 126      =1  sfr16   PW1D     = 0xBB;
+ 127      =1  sfr     PW1DL    = 0xBB;
+ 128      =1  sfr     PW1DH    = 0xBC;
+ 129      =1  sfr     PW1A     = 0xBD;
+ 130      =1  sfr     PW1CH    = 0xBE;
+ 131      =1  sfr     IRCON2   = 0xBF;
+ 132      =1  sfr     IRCON    = 0xC0;
+ 133      =1    sbit   TF2RL   = IRCON^7;
+ 134      =1    sbit   TF2     = IRCON^6;
+ 135      =1    sbit   TF2C3   = IRCON^5;
+ 136      =1    sbit   TF2C2   = IRCON^4;
+ 137      =1    sbit   TF2C1   = IRCON^3;
+ 138      =1    sbit   TF2C0   = IRCON^2;
+ 139      =1  sfr     CCEN     = 0xC1;
+ 140      =1  sfr     CCL1     = 0xC2;
+ 141      =1  sfr     CCH1     = 0xC3;
+ 142      =1  sfr     CCL2     = 0xC4;
+ 143      =1  sfr     CCH2     = 0xC5;
+ 144      =1  sfr     CCL3     = 0xC6;
+ 145      =1  sfr     CCH3     = 0xC7;
+ 146      =1  sfr     T2CON    = 0xC8;
+ 147      =1    sbit  T2PS     = T2CON^7;
+ 148      =1    sbit  I3FR     = T2CON^6;
+ 149      =1    sbit  GF1      = T2CON^5;
+ 150      =1    sbit  T2R1     = T2CON^4;
+ 151      =1    sbit  T2R0     = T2CON^3;
+ 152      =1    sbit  T2CM     = T2CON^2;
+ 153      =1    sbit  T2I1     = T2CON^1;
+ 154      =1    sbit  T2I0     = T2CON^0;
+ 155      =1  sfr     CRCL     = 0xCA;
+ 156      =1  sfr     CRCH     = 0xCB;
+ 157      =1  sfr     TL2      = 0xCC;
+ 158      =1  sfr     TH2      = 0xCD;
+ 159      =1  sfr     CSRS     = 0xCE;
+ 160      =1  sfr     PSW      = 0xD0;
+ 161      =1    sbit  CY       = PSW^7;
+ 162      =1    sbit  AC       = PSW^6;
+ 163      =1    sbit  F0       = PSW^5;
+ 164      =1    sbit  RS1      = PSW^4;
+ 165      =1    sbit  RS0      = PSW^3;
+ 166      =1    sbit  OV       = PSW^2;
+ 167      =1    sbit  F1       = PSW^1;
+ 168      =1    sbit  P        = PSW^0;
+ 169      =1  sfr     ADM      = 0xD2;
+ 170      =1  sfr     ADB      = 0xD3;
+ 171      =1  sfr     ADR      = 0xD4;
+ 172      =1  sfr     VREFH    = 0xD5;
+ 173      =1  sfr     P2CON    = 0xD6;
+ 174      =1  sfr     P3CON    = 0xD7;
+ 175      =1  sfr     S0CON2   = 0xD8;
+ 176      =1    sbit  BD       = S0CON2^7;
+ 177      =1  sfr     ADT      = 0xD9;
+C51 COMPILER V9.56.0.0   MAIN                                                              03/01/2021 16:54:12 PAGE 4   
+
+ 178      =1  sfr     I2CDAT   = 0xDA;
+ 179      =1  sfr     I2CADR   = 0xDB;
+ 180      =1  sfr     I2CCON   = 0xDC;
+ 181      =1  sfr     I2CSTA   = 0xDD;
+ 182      =1  sfr     SMBSEL   = 0xDE;
+ 183      =1  sfr     SMBDST   = 0xDF;
+ 184      =1  sfr     ACC      = 0xE0;
+ 185      =1  sfr     SPSTA    = 0xE1;
+ 186      =1  sfr     SPCON    = 0xE2;
+ 187      =1  sfr     SPDAT    = 0xE3;
+ 188      =1  sfr     P0OC     = 0xE4;
+ 189      =1  sfr     CLKSEL   = 0xE5;
+ 190      =1  sfr     CLKCMD   = 0xE6;
+ 191      =1  sfr     TCON0    = 0xE7;
+ 192      =1  sfr     B        = 0xF0;
+ 193      =1  sfr     P0UR     = 0xF1;
+ 194      =1  sfr     P1UR     = 0xF2;
+ 195      =1  sfr     P2UR     = 0xF3;
+ 196      =1  sfr     P3UR     = 0xF4;
+ 197      =1  sfr     SRST     = 0xF7;
+ 198      =1  sfr     P0M      = 0xF9;
+ 199      =1  sfr     P1M      = 0xFA;
+ 200      =1  sfr     P2M      = 0xFB;
+ 201      =1  sfr     P3M      = 0xFC;
+ 202      =1  sfr     PFLAG    = 0xFF;
+ 203      =1  
+ 204      =1  /*      Interrupt Vector      */
+ 205      =1  #define ISRInt0    0
+ 206      =1  #define ISRTimer0  1
+ 207      =1  #define ISRInt1    2
+ 208      =1  #define ISRTimer1  3
+ 209      =1  #define ISRUart    4
+ 210      =1  #define ISRTimer2  5
+ 211      =1  #define ISRI2c     8
+ 212      =1  #define ISRSpi     9
+ 213      =1  #define ISRCom0    10
+ 214      =1  #define ISRCom1    11
+ 215      =1  #define ISRCom2    12
+ 216      =1  #define ISRCom3    13
+ 217      =1  #define ISRCS      16
+ 218      =1  #define ISRAdc     17
+ 219      =1  #define ISRPwm1    18
+ 220      =1  #define ISRInt2    29
+ 221      =1  
+ 222      =1  /*      C51 Macros      */
+ 223      =1  #ifdef __C51__
+ 224      =1  #include <intrins.h>
+   1      =2  /*--------------------------------------------------------------------------
+   2      =2  INTRINS.H
+   3      =2  
+   4      =2  Intrinsic functions for C51.
+   5      =2  Copyright (c) 1988-2010 Keil Elektronik GmbH and ARM Germany GmbH
+   6      =2  All rights reserved.
+   7      =2  --------------------------------------------------------------------------*/
+   8      =2  
+   9      =2  #ifndef __INTRINS_H__
+  10      =2  #define __INTRINS_H__
+  11      =2  
+  12      =2  #pragma SAVE
+  13      =2  
+  14      =2  #if defined (__CX2__)
+           =2 #pragma FUNCTIONS(STATIC)
+C51 COMPILER V9.56.0.0   MAIN                                                              03/01/2021 16:54:12 PAGE 5   
+
+           =2 /* intrinsic functions are reentrant, but need static attribute */
+           =2 #endif
+  18      =2  
+  19      =2  extern void          _nop_     (void);
+  20      =2  extern bit           _testbit_ (bit);
+  21      =2  extern unsigned char _cror_    (unsigned char, unsigned char);
+  22      =2  extern unsigned int  _iror_    (unsigned int,  unsigned char);
+  23      =2  extern unsigned long _lror_    (unsigned long, unsigned char);
+  24      =2  extern unsigned char _crol_    (unsigned char, unsigned char);
+  25      =2  extern unsigned int  _irol_    (unsigned int,  unsigned char);
+  26      =2  extern unsigned long _lrol_    (unsigned long, unsigned char);
+  27      =2  extern unsigned char _chkfloat_(float);
+  28      =2  #if defined (__CX2__)
+           =2 extern int           abs       (int);
+           =2 extern void          _illop_   (void);
+           =2 #endif
+  32      =2  #if !defined (__CX2__)
+  33      =2  extern void          _push_    (unsigned char _sfr);
+  34      =2  extern void          _pop_     (unsigned char _sfr);
+  35      =2  #endif
+  36      =2  
+  37      =2  #pragma RESTORE
+  38      =2  
+  39      =2  #endif
+  40      =2  
+ 225      =1  #define IDLE() {unsigned char data var_idle=PCON; var_idle |= 0x01; PCON = var_idle; }
+ 226      =1  #define STOP() {if (EAL == 0) {PCON |= 0x02;} else {EAL = 0; PCON |= 0x02; EAL = 1;}}
+ 227      =1  #define PISP(ROM_ADDRESS, RAM_ADDRESS) {PERAM = (RAM_ADDRESS); PEROM = ((ROM_ADDRESS) & 0xFFE0); if (EAL =
+             -= 0) {PECMD = 0x5A; _nop_(); _nop_();} else {EAL = 0; PECMD = 0x5A; _nop_(); _nop_(); EAL = 1;}}
+ 228      =1  #define BISP(ROM_ADDRESS, RAM_ADDRESS) {PERAM = (RAM_ADDRESS); PEROM = ((ROM_ADDRESS) & 0xFFFF); if (EAL =
+             -= 0) {PECMD = 0x1E; _nop_(); _nop_();} else {EAL = 0; PECMD = 0x1E; _nop_(); _nop_(); EAL = 1;}}
+ 229      =1  
+ 230      =1  #endif  // __C51__
+ 231      =1  
+ 232      =1  #ifndef uint8_t
+ 233      =1  #define uint8_t unsigned char
+ 234      =1  #endif  // uint8_t
+ 235      =1  
+ 236      =1  #ifndef uint16_t
+ 237      =1  #define uint16_t unsigned int
+ 238      =1  #endif  // uint16_t
+ 239      =1  
+ 240      =1  #ifndef uint32_t
+ 241      =1  #define uint32_t unsigned long
+ 242      =1  #endif  // uint32_t
+ 243      =1  
+ 244      =1  #endif  // __SN8F5804_H__
+   2          #include "system.h"
+   1      =1  #ifndef __SYSTEM_H
+   2      =1  #define __SYSTEM_H
+   3      =1  
+   4      =1  #define   TIMER0_H              0xfc
+   5      =1  #define   TIMER0_L              0xbf
+   6      =1  #define   TIMER0_MODE1          0x01
+   7      =1  #define   TIMER0_RUN            0x10
+   8      =1  #define   TIMER0_STOP           0xef
+   9      =1  #define   TIMER0_IT_EN          0x02
+  10      =1  #define   TIMER0_IT_DIS         0xfd
+  11      =1  
+  12      =1  
+  13      =1  #define   SYSTEM_ID             0x34
+  14      =1  
+C51 COMPILER V9.56.0.0   MAIN                                                              03/01/2021 16:54:12 PAGE 6   
+
+  15      =1  
+  16      =1  
+  17      =1  
+  18      =1  struct System {
+  19      =1      unsigned char state;
+  20      =1      unsigned char id;
+  21      =1      unsigned char shutting:1;
+  22      =1      unsigned char t0_on:1;
+  23      =1  };
+  24      =1  
+  25      =1  void init_system(void);
+  26      =1  
+  27      =1  void start_system(void);
+  28      =1  
+  29      =1  void stop_system(void);
+  30      =1  
+  31      =1  void start_timer0(void);
+  32      =1  void stop_timer0(void);
+  33      =1  
+  34      =1  void check_exception(void);
+  35      =1  
+  36      =1  void check_state(void);
+  37      =1  
+  38      =1  #endif
+   3          #include "lcd.h"
+   1      =1  #ifndef __LCD_H
+   2      =1  #define __LCD_H
+   3      =1  
+   4      =1  #define  LCD_SERIAL                  0x00
+   5      =1  #define  LCD_PARALLEL                0x01
+   6      =1  
+   7      =1  #define  LCD_PSB_MODE                LCD_SERIAL
+   8      =1  
+   9      =1  #define  DELAY_MS_START              0x29b
+  10      =1  
+  11      =1  #define  CMD_TYPE                    0x00
+  12      =1  #define  DATA_TYPE                   0x01
+  13      =1  
+  14      =1  #define  LCD_ON                      0x01
+  15      =1  #define  LCD_OFF                     0x00
+  16      =1  
+  17      =1  
+  18      =1  #define  LCD_TEXT_MODE               0x30
+  19      =1  #define  LCD_GRAPH_MODE              0x36
+  20      =1  
+  21      =1  #define  DELAY_NMS                   0x03
+  22      =1  #define  DELAY_NUS                   0x0a
+  23      =1  
+  24      =1  #define  LCD_LEN                     0x40
+  25      =1  
+  26      =1  #define  STRS_LEN                    0x0c
+  27      =1  
+  28      =1  #define  GUI2_HEAD_LEN               0x05
+  29      =1  #define  ROW1_HEAD                   0x80
+  30      =1  #define  ROW2_HEAD                   0x90
+  31      =1  #define  ROW3_HEAD                   0x88
+  32      =1  #define  ROW4_HEAD                   0x98
+  33      =1  
+  34      =1  #define  ROW1_BODY                   0x82
+  35      =1  #define  ROW2_BODY                   0x92
+  36      =1  #define  ROW3_BODY                   0x8a
+  37      =1  #define  ROW4_BODY                   0x9a
+C51 COMPILER V9.56.0.0   MAIN                                                              03/01/2021 16:54:12 PAGE 7   
+
+  38      =1  
+  39      =1  #define  BUFFER_LEN                  0x0c
+  40      =1  //BUFFER_LEN 不良描述固定占用12个字符
+  41      =1  
+  42      =1  #define  GUI3_ROW_LEN                0x0b
+  43      =1  
+  44      =1  struct Lcd {
+  45      =1      
+  46      =1      unsigned char gui_id;
+  47      =1      
+  48      =1      unsigned char buffer[STRS_LEN];
+  49      =1  
+  50      =1      
+  51      =1      unsigned char pos;                  // 行定入时的行首定位
+  52      =1      unsigned char *str;                 // 
+  53      =1      unsigned char err_index;            // 当前的错误ID下标
+  54      =1      unsigned char err_len;              // err_ids 的有效长度  
+  55      =1      unsigned char err_ids[BUFFER_LEN];  // http返回的错误ID列表
+  56      =1      unsigned char on:1;
+  57      =1      unsigned char updated:1;
+  58      =1  };
+  59      =1  
+  60      =1  void init_lcd(void);
+  61      =1  
+  62      =1  void switch_lcd(unsigned char state);
+  63      =1  
+  64      =1  void write_byte(unsigned char type, unsigned char dat);
+  65      =1  
+  66      =1  void display(void);
+  67      =1  
+  68      =1  
+  69      =1  
+  70      =1  #endif
+   4          #include "key.h"
+   1      =1  #ifndef __KEY_H
+   2      =1  #define __KEY_H
+   3      =1  
+   4      =1  #define   KEY_NULL                   0x00
+   5      =1  #define   KEY1_CLICK                 0x01
+   6      =1  #define   KEY2_CLICK                 0x02
+   7      =1  #define   KEY3_CLICK                 0x04
+   8      =1  #define   KEY4_CLICK                 0x08
+   9      =1  
+  10      =1  #define   KEY_DOWN_CONFIRM           0x06
+  11      =1  #define   KEY_DOWN_MAX               0x10
+  12      =1  #define   KEY_UP_CONFIRM             0x08
+  13      =1  #define   KEY_UP_MAX                 0x10
+  14      =1  
+  15      =1  struct Key {
+  16      =1      unsigned char up_count;
+  17      =1      unsigned char down_count;
+  18      =1      unsigned char union_val;
+  19      =1      unsigned char down_val;
+  20      =1      unsigned char new_val;
+  21      =1      unsigned char gui_id;
+  22      =1      unsigned char product_id;
+  23      =1      
+  24      =1      unsigned char select_id;
+  25      =1      unsigned char scan_tick:1;
+  26      =1      unsigned char handler_tick:1;
+  27      =1  };
+  28      =1  
+C51 COMPILER V9.56.0.0   MAIN                                                              03/01/2021 16:54:12 PAGE 8   
+
+  29      =1  void scan_key(void);
+  30      =1  void handle_key(void);
+  31      =1  #endif
+  32      =1  /**
+  33      =1  
+  34      =1  
+  35      =1  **/
+   5          
+   6          
+   7          extern struct System system;
+   8          
+   9          void main(void){
+  10   1          init_system();
+  11   1          start_system();
+  12   1          start_timer0();
+  13   1          switch_lcd(LCD_ON);
+  14   1          while(1){
+  15   2              WDTR = 0x5a;
+  16   2              check_exception();
+  17   2              check_state();
+  18   2              scan_key();
+  19   2              handle_key();
+  20   2              display();
+  21   2          }
+  22   1      }
+C51 COMPILER V9.56.0.0   MAIN                                                              03/01/2021 16:54:12 PAGE 9   
+
+ASSEMBLY LISTING OF GENERATED OBJECT CODE
+
+
+             ; FUNCTION main (BEGIN)
+                                           ; SOURCE LINE # 9
+                                           ; SOURCE LINE # 10
+0000 120000      E     LCALL   init_system
+                                           ; SOURCE LINE # 11
+0003 120000      E     LCALL   start_system
+                                           ; SOURCE LINE # 12
+0006 120000      E     LCALL   start_timer0
+                                           ; SOURCE LINE # 13
+0009 7F01              MOV     R7,#01H
+000B 120000      E     LCALL   _switch_lcd
+000E         ?C0001:
+                                           ; SOURCE LINE # 14
+                                           ; SOURCE LINE # 15
+000E 75865A            MOV     WDTR,#05AH
+                                           ; SOURCE LINE # 16
+0011 120000      E     LCALL   check_exception
+                                           ; SOURCE LINE # 17
+0014 120000      E     LCALL   check_state
+                                           ; SOURCE LINE # 18
+0017 120000      E     LCALL   scan_key
+                                           ; SOURCE LINE # 19
+001A 120000      E     LCALL   handle_key
+                                           ; SOURCE LINE # 20
+001D 120000      E     LCALL   display
+                                           ; SOURCE LINE # 21
+0020 80EC              SJMP    ?C0001
+             ; FUNCTION main (END)
+
+C51 COMPILER V9.56.0.0   MAIN                                                              03/01/2021 16:54:12 PAGE 10  
+
+NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
+====                                    =====   ======  ====    ======  ====
+
+
+P0 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0080H  1
+P1 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0090H  1
+P2 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00A0H  1
+P3 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00B0H  1
+check_state. . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
+System . . . . . . . . . . . . . . . .  * TAG *  -----  STRUCT   -----  3
+  state. . . . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0000H  1
+  id . . . . . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0001H  1
+  shutting . . . . . . . . . . . . . .  MEMBER   -----  FIELD    0002H  1.0
+  t0_on. . . . . . . . . . . . . . . .  MEMBER   -----  FIELD    0002H  1.1
+IEN0 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00A8H  1
+IEN1 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00B8H  1
+Lcd. . . . . . . . . . . . . . . . . .  * TAG *  -----  STRUCT   -----  32
+  gui_id . . . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0000H  1
+  buffer . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0001H  12
+  pos. . . . . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   000DH  1
+  str. . . . . . . . . . . . . . . . .  MEMBER   -----  PTR      000EH  3
+  err_index. . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0011H  1
+  err_len. . . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0012H  1
+  err_ids. . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0013H  12
+  on . . . . . . . . . . . . . . . . .  MEMBER   -----  FIELD    001FH  1.0
+  updated. . . . . . . . . . . . . . .  MEMBER   -----  FIELD    001FH  1.1
+S0CON2 . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00D8H  1
+handle_key . . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
+main . . . . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+Key. . . . . . . . . . . . . . . . . .  * TAG *  -----  STRUCT   -----  9
+  up_count . . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0000H  1
+  down_count . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0001H  1
+  union_val. . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0002H  1
+  down_val . . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0003H  1
+  new_val. . . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0004H  1
+  gui_id . . . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0005H  1
+  product_id . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0006H  1
+  select_id. . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0007H  1
+  scan_tick. . . . . . . . . . . . . .  MEMBER   -----  FIELD    0008H  1.0
+  handler_tick . . . . . . . . . . . .  MEMBER   -----  FIELD    0008H  1.1
+_switch_lcd. . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
+TCON . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0088H  1
+check_exception. . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
+start_system . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
+init_system. . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
+WDTR . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0086H  1
+scan_key . . . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
+S0CON. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0098H  1
+start_timer0 . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
+T2CON. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00C8H  1
+display. . . . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
+PSW. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00D0H  1
+IRCON. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00C0H  1
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     34    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+C51 COMPILER V9.56.0.0   MAIN                                                              03/01/2021 16:54:12 PAGE 11  
+
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

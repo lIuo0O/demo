@@ -1,0 +1,75 @@
+C51 COMPILER V9.56.0.0   MAIN                                                              09/30/2018 14:56:49 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\Main.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Scr\Main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\
+                    -Main.lst) TABS(2) OBJECT(.\Objects\Main.obj)
+
+line level    source
+
+   1          //T2定时1MS(PWM 频率1KHz)
+   2          //Program Size: data=9.0 xdata=0 code=172
+   3          //HexConvertVer = V22
+   4          //CheckSum = 0xA41E
+   5          //2018.10.09_V3.2
+   6          #include "T2COM.h"
+   7          //=================================================================================================//
+   8          //main loop
+   9          //=================================================================================================//
+  10          void main(void)
+  11          {
+  12   1        Systeminit();
+  13   1        T2COMinit();
+  14   1        EAL = 1;
+  15   1        while(1)
+  16   1        {
+  17   2          WDTR = 0x5a;
+  18   2        }
+  19   1      }
+  20          
+  21          //=================================================================================================//
+  22          //System init
+  23          //=================================================================================================//
+  24          void Systeminit(void)
+  25          {
+  26   1      //系统时钟寄存器,From 最大跑8M  
+  27   1      //====================================================================================//
+  28   1        CLKSEL = 0x07;                  // Fcpu = 32M/1 = 32M
+  29   1        CLKCMD = 0x69;        
+  30   1        CKCON = 0x30;                   // From = 8M
+  31   1      
+  32   1      //清看门狗
+  33   1      //====================================================================================//  
+  34   1        WDTR = 0x5A;                    // clear watchdog 
+  35   1        
+  36   1      //GPIO初始化, T2COM口P10,P11,P12,P13初始化设为输出低,P5做为测试口
+  37   1      //====================================================================================//  
+  38   1        P0 = 0;
+  39   1        P0M = 0xff;
+  40   1        P0UR = 0xff;
+  41   1      
+  42   1        P1 = 0;
+  43   1        P1M = 0xff;                 
+  44   1        P1UR = 0xf0;
+  45   1      
+  46   1        P2 = 0;
+  47   1        P2M = 0;                 
+  48   1        P2UR = 0xff;    
+  49   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     50    ----
+   CONSTANT SIZE    =   ----    ----
+C51 COMPILER V9.56.0.0   MAIN                                                              09/30/2018 14:56:49 PAGE 2   
+
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

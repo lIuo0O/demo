@@ -1,0 +1,123 @@
+C51 COMPILER V9.54   MSPI                                                                  11/06/2018 15:38:21 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MSPI
+OBJECT MODULE PLACED IN .\Objects\mspi.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Src\mspi.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\
+                    -mspi.lst) TABS(2) OBJECT(.\Objects\mspi.obj)
+
+line level    source
+
+   1          #include "mspi.h"
+   2          //-------------------------------------------------------------------------//
+   3          uint8_t g_cTxData [MAX_TX_LEN] = {1, 2, 3, 4, 5, 6, 7, 8};  //for test
+   4          uint8_t g_cRxData [MAX_RX_LEN];                             //for test
+   5          /****************************************************************************************
+   6          Function:   SPI Slave initialization
+   7          input:      None
+   8          Output:     None
+   9          Return:     None
+  10          ****************************************************************************************/
+  11          void spi_master_init (void)
+  12          {
+  13   1        P0 |= 0x80;
+  14   1        P0M |= 0x80;
+  15   1        P0UR &= 0x7F;       // Set P0.7 (SSN) as output high 
+  16   1      
+  17   1        P1M &= 0xC7;
+  18   1        P1M |= 0x18;
+  19   1        P1UR |= 0x20;       // Be Master  MISO(P15) Input with pull-up   SCK(P13) & MOSI(P14) Output
+  20   1      
+  21   1        SPCON = 0xBA;       // Be Master Fcpu/128  CPOL = 1   CPHA = 0
+  22   1      
+  23   1        SPCON |= 0x40;      // Enable SPI
+  24   1      }
+  25          /****************************************************************************************
+  26          Function:   spi_write_read_byte
+  27          input:      None
+  28          Output:     None
+  29          Return:     None
+  30          ****************************************************************************************/
+  31          void spi_WrRd_byte (uint8_t * p_cSrc, uint8_t * p_cDst, uint8_t cLenth)
+  32          {
+  33   1        uint8_t cCnt;
+  34   1        
+  35   1        for(cCnt = 0; cCnt < cLenth;cCnt++)
+  36   1        {
+  37   2          spi_send_data(*p_cSrc++);         // Send Data
+  38   2          *p_cDst++ = spi_read_data();      // Receive Data
+  39   2        }
+  40   1      }
+  41          /****************************************************************************************
+  42          Function:   spi_send_data
+  43          input:      None
+  44          Output:     None
+  45          Return:     None
+  46          ****************************************************************************************/
+  47          void spi_send_data (uint8_t cByte)
+  48          {
+  49   1        uint8_t cTemp;
+  50   1        uint16_t cRetry = 0;
+  51   1        
+  52   1        O_IO_CS = 0;                        // Enable Slave
+  53   1        
+  54   1        SPDAT = cByte;                      // Send Byte
+C51 COMPILER V9.54   MSPI                                                                  11/06/2018 15:38:21 PAGE 2   
+
+  55   1        while ((SPSTA & 0x80) != 0x80)
+  56   1        {
+  57   2          cRetry++;
+  58   2          _nop_();
+  59   2          _nop_();
+  60   2          if(cRetry >= WAIT_TIME)
+  61   2          {
+  62   3            return;                         // Error
+  63   3          }
+  64   2        }
+  65   1        cTemp = SPDAT;
+  66   1        
+  67   1        O_IO_CS = 1;                        // Disable Slave
+  68   1      }
+  69          /****************************************************************************************
+  70          Function:   spi_read_data
+  71          input:      None
+  72          Output:     None
+  73          Return:     None
+  74          ****************************************************************************************/
+  75          uint8_t spi_read_data (void)
+  76          {
+  77   1        uint8_t cTemp;
+  78   1        uint16_t cRetry = 0;
+  79   1        
+  80   1        O_IO_CS = 0;                      // Enable Slave
+  81   1      
+  82   1        SPDAT = 0xFF;                     
+  83   1        while ((SPSTA & 0x80) != 0x80)
+  84   1        {
+  85   2          _nop_();
+  86   2          _nop_();
+  87   2          if(cRetry >= WAIT_TIME)
+  88   2          {
+  89   3            return 0xFF;                  // Error
+  90   3          }
+  91   2        }
+  92   1        cTemp = SPDAT;                    // Receive Byte                 
+  93   1      
+  94   1        O_IO_CS = 1;                      // Disable Slave
+  95   1       
+  96   1        return cTemp;
+  97   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    155    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     16       9
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

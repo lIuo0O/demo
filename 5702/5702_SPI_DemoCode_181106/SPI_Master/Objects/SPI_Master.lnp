@@ -1,0 +1,6 @@
+".\Objects\STARTUP.obj",
+".\Objects\OPTIONS_SN8F5702.obj",
+".\Objects\main.obj",
+".\Objects\mspi.obj" 
+TO ".\Objects\SPI_Master" 
+PRINT(".\Listings\SPI_Master.m51") RAMSIZE(256) 

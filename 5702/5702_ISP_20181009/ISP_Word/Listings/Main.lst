@@ -1,0 +1,85 @@
+C51 COMPILER V9.56.0.0   MAIN                                                              09/30/2018 13:42:29 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\Main.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Src\Main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\
+                    -Main.lst) TABS(2) OBJECT(.\Objects\Main.obj)
+
+line level    source
+
+   1          //Program Size: data=107.0 xdata=0 code=528
+   2          //HexConvertVer = V22
+   3          //CheckSum = 0x9E6A
+   4          //2018.09.10_V2.3
+   5          #include "ISP.h"
+   6          
+   7          //========================================================================================================
+             -=====//
+   8          //main loop
+   9          //========================================================================================================
+             -=====//
+  10          void main(void)
+  11          {
+  12   1        Systeminit();                                     
+  13   1        ISPinit();                                              //写入需要存入Flash中的数据
+  14   1        ISPpagewrite(r_isp_write_data);                         //写ISP
+  15   1        ISPpageread1();                                         //按照数组名称读rom
+  16   1        _nop_();
+  17   1        _nop_();    
+  18   1        _nop_();
+  19   1        _nop_();    
+  20   1        ISPpageread2();                                         //按照地址读rom
+  21   1        while(1)
+  22   1        {
+  23   2          WDTR = 0x5a;
+  24   2        }
+  25   1      }
+  26          
+  27          
+  28          //====================================================================================================//
+  29          //Systeminit init 
+  30          //====================================================================================================//
+  31          void Systeminit(void)
+  32          {
+  33   1      
+  34   1      //系统时钟寄存器,From 最大跑8M  
+  35   1      //====================================================================================//
+  36   1        CLKSEL = 0x07;                                         // Fcpu = 32M/2 = 16M
+  37   1        CLKCMD = 0x69;        
+  38   1        CKCON = 0x30;                                          // From = 8M
+  39   1      
+  40   1      //清看门狗
+  41   1      //====================================================================================//  
+  42   1        WDTR = 0x5A;                                           // clear watchdog 
+  43   1        
+  44   1      //GPIO初始化, 
+  45   1      //====================================================================================//  
+  46   1        P0 = 0;
+  47   1        P0M = 0;
+  48   1        P0UR = 0xff;
+  49   1        
+  50   1        P1 = 0;
+  51   1        P1M = 0;
+  52   1        P1UR = 0xff;
+C51 COMPILER V9.56.0.0   MAIN                                                              09/30/2018 13:42:29 PAGE 2   
+
+  53   1        
+  54   1        P2 = 0;
+  55   1        P2M = 0;
+  56   1        P2UR = 0xff;    
+  57   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     65    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

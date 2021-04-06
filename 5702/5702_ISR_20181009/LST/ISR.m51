@@ -1,0 +1,344 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        09/30/2018  14:06:26  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Output\Main.obj, .\Output\ISR.obj, .\Output\STARTUP.obj, .\Output\OPTIONS_SN8F5702.obj TO 
+>> .\Output\ISR PRINT (.\LST\ISR.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Output\Main.obj (MAIN)
+  .\Output\ISR.obj (ISR)
+  .\Output\STARTUP.obj (?C_STARTUP)
+  .\Output\OPTIONS_SN8F5702.obj (OPTIONS_SN8F5702)
+
+
+LINK MAP OF MODULE:  .\Output\ISR (MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            IDATA   0008H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0003H     ABSOLUTE     
+            CODE    0006H     0005H     UNIT         ?PR?UART_ISR?ISR
+            CODE    000BH     0003H     ABSOLUTE     
+            CODE    000EH     000DH     UNIT         ?PR?MAIN?MAIN
+            CODE    001BH     0003H     ABSOLUTE     
+            CODE    001EH     0005H     UNIT         ?PR?TIMER2_ISR?ISR
+            CODE    0023H     0003H     ABSOLUTE     
+            CODE    0026H     0004H     UNIT         ?PR?I2C_ISR?ISR
+            CODE    002AH     0001H     UNIT         ?PR?TIMER0_ISR?ISR
+            CODE    002BH     0003H     ABSOLUTE     
+            CODE    002EH     000CH     UNIT         ?C_C51STARTUP
+            CODE    003AH     0007H     UNIT         ?PR?SPI_ISR?ISR
+            CODE    0041H     0001H     UNIT         ?PR?TIMER1_ISR?ISR
+            CODE    0042H     0001H     UNIT         ?PR?COM0_ISR?ISR
+            CODE    0043H     0003H     ABSOLUTE     
+            CODE    0046H     0004H     UNIT         ?PR?PWM1_ISR?ISR
+            CODE    004AH     0001H     UNIT         ?PR?COM1_ISR?ISR
+            CODE    004BH     0003H     ABSOLUTE     
+            CODE    004EH     0004H     UNIT         ?PR?ADC_ISR?ISR
+            CODE    0052H     0001H     UNIT         ?PR?COM2_ISR?ISR
+            CODE    0053H     0003H     ABSOLUTE     
+            CODE    0056H     0003H     UNIT         ?PR?INT0_ISR?ISR
+            CODE    0059H     0001H     UNIT         ?PR?COM3_ISR?ISR
+                    005AH     0001H                  *** GAP ***
+            CODE    005BH     0003H     ABSOLUTE     
+                    005EH     0005H                  *** GAP ***
+            CODE    0063H     0003H     ABSOLUTE     
+                    0066H     0005H                  *** GAP ***
+            CODE    006BH     0003H     ABSOLUTE     
+                    006EH     0015H                  *** GAP ***
+            CODE    0083H     0003H     ABSOLUTE     
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/30/2018  14:06:26  PAGE 2
+
+
+                    0086H     0005H                  *** GAP ***
+            CODE    008BH     0003H     ABSOLUTE     
+            CODE    008EH     0025H     UNIT         ?PR?ISRINIT?ISR
+            CODE    00B3H     0023H     UNIT         ?PR?SYSTEMINIT?MAIN
+                    00D6H     0F20H                  *** GAP ***
+            CODE    0FF6H     000AH     ABSOLUTE     
+
+
+
+OVERLAY MAP OF MODULE:   .\Output\ISR (MAIN)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?MAIN
+
+?PR?MAIN?MAIN
+  +--> ?PR?SYSTEMINIT?MAIN
+  +--> ?PR?ISRINIT?ISR
+
+
+
+SYMBOL TABLE OF MODULE:  .\Output\ISR (MAIN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00A8H         PUBLIC        IEN0
+  D:00B8H         PUBLIC        IEN1
+  D:00D8H         PUBLIC        S0CON2
+  C:000EH         PUBLIC        main
+  D:00F1H         PUBLIC        P0UR
+  D:00F2H         PUBLIC        P1UR
+  D:00F3H         PUBLIC        P2UR
+  D:00E6H         PUBLIC        CLKCMD
+  D:0088H         PUBLIC        TCON
+  C:00B3H         PUBLIC        Systeminit
+  D:00E5H         PUBLIC        CLKSEL
+  D:0086H         PUBLIC        WDTR
+  D:00F9H         PUBLIC        P0M
+  D:00FAH         PUBLIC        P1M
+  D:00FBH         PUBLIC        P2M
+  B:00A8H.7       PUBLIC        EAL
+  D:0098H         PUBLIC        S0CON
+  D:00C8H         PUBLIC        T2CON
+  D:008EH         PUBLIC        CKCON
+  D:00D0H         PUBLIC        PSW
+  D:00C0H         PUBLIC        IRCON
+  -------         PROC          MAIN
+  C:000EH         LINE#         11
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/30/2018  14:06:26  PAGE 3
+
+
+  C:000EH         LINE#         12
+  C:000EH         LINE#         13
+  C:0011H         LINE#         14
+  C:0014H         LINE#         15
+  C:0016H         LINE#         16
+  C:0016H         LINE#         17
+  C:0016H         LINE#         18
+  C:0019H         LINE#         19
+  -------         ENDPROC       MAIN
+  -------         PROC          SYSTEMINIT
+  C:00B3H         LINE#         25
+  C:00B3H         LINE#         26
+  C:00B3H         LINE#         29
+  C:00B6H         LINE#         30
+  C:00B9H         LINE#         31
+  C:00BCH         LINE#         35
+  C:00BFH         LINE#         39
+  C:00C2H         LINE#         40
+  C:00C4H         LINE#         41
+  C:00C7H         LINE#         43
+  C:00C9H         LINE#         44
+  C:00CBH         LINE#         45
+  C:00CEH         LINE#         47
+  C:00D0H         LINE#         48
+  C:00D2H         LINE#         49
+  C:00D5H         LINE#         51
+  -------         ENDPROC       SYSTEMINIT
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        ISR
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  C:002AH         PUBLIC        Timer0_ISR
+  B:00B8H.0       PUBLIC        EI2C
+  C:0041H         PUBLIC        Timer1_ISR
+  C:001EH         PUBLIC        Timer2_ISR
+  D:00E1H         PUBLIC        SPSTA
+  D:00A8H         PUBLIC        IEN0
+  C:0026H         PUBLIC        I2C_ISR
+  D:00B8H         PUBLIC        IEN1
+  D:009AH         PUBLIC        IEN2
+  D:00D1H         PUBLIC        IEN4
+  D:00D8H         PUBLIC        S0CON2
+  C:004EH         PUBLIC        ADC_ISR
+  D:00DCH         PUBLIC        I2CCON
+  C:008EH         PUBLIC        ISRinit
+  D:00BFH         PUBLIC        IRCON2
+  B:00B8H.1       PUBLIC        ESPI
+  D:0088H         PUBLIC        TCON
+  C:003AH         PUBLIC        SPI_ISR
+  B:0088H.1       PUBLIC        IE0
+  B:00B8H.2       PUBLIC        ET2C0
+  B:00B8H.3       PUBLIC        ET2C1
+  B:00B8H.4       PUBLIC        ET2C2
+  B:00B8H.5       PUBLIC        ET2C3
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/30/2018  14:06:26  PAGE 4
+
+
+  B:00A8H.4       PUBLIC        ES0
+  D:00A9H         PUBLIC        IP0
+  B:00A8H.1       PUBLIC        ET0
+  D:00B9H         PUBLIC        IP1
+  B:00A8H.3       PUBLIC        ET1
+  B:00A8H.5       PUBLIC        ET2
+  B:0098H.0       PUBLIC        RI0
+  B:00C0H.6       PUBLIC        TF2
+  B:00A8H.0       PUBLIC        EX0
+  B:0098H.1       PUBLIC        TI0
+  B:00A8H.7       PUBLIC        EAL
+  C:0042H         PUBLIC        COM0_ISR
+  C:004AH         PUBLIC        COM1_ISR
+  C:0052H         PUBLIC        COM2_ISR
+  C:0059H         PUBLIC        COM3_ISR
+  D:0098H         PUBLIC        S0CON
+  D:00C8H         PUBLIC        T2CON
+  C:0056H         PUBLIC        INT0_ISR
+  B:00C0H.7       PUBLIC        TF2RL
+  C:0006H         PUBLIC        Uart_ISR
+  C:0046H         PUBLIC        PWM1_ISR
+  D:00D0H         PUBLIC        PSW
+  D:00C0H         PUBLIC        IRCON
+  -------         PROC          ISRINIT
+  C:008EH         LINE#         22
+  C:008EH         LINE#         23
+  C:008EH         LINE#         24
+  C:0090H         LINE#         26
+  C:0092H         LINE#         28
+  C:0094H         LINE#         30
+  C:0096H         LINE#         32
+  C:0098H         LINE#         34
+  C:009AH         LINE#         36
+  C:009CH         LINE#         38
+  C:009EH         LINE#         39
+  C:00A0H         LINE#         40
+  C:00A2H         LINE#         41
+  C:00A4H         LINE#         43
+  C:00A7H         LINE#         45
+  C:00AAH         LINE#         47
+  C:00ACH         LINE#         49
+  C:00AFH         LINE#         50
+  C:00B2H         LINE#         51
+  -------         ENDPROC       ISRINIT
+  -------         PROC          INT0_ISR
+  C:0056H         LINE#         57
+  C:0056H         LINE#         60
+  C:0058H         LINE#         61
+  -------         ENDPROC       INT0_ISR
+  -------         PROC          TIMER0_ISR
+  C:002AH         LINE#         63
+  C:002AH         LINE#         67
+  -------         ENDPROC       TIMER0_ISR
+  -------         PROC          TIMER1_ISR
+  C:0041H         LINE#         69
+  C:0041H         LINE#         73
+  -------         ENDPROC       TIMER1_ISR
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/30/2018  14:06:26  PAGE 5
+
+
+  -------         PROC          UART_ISR
+  C:0006H         LINE#         75
+  C:0006H         LINE#         77
+  C:0008H         LINE#         78
+  C:000AH         LINE#         79
+  -------         ENDPROC       UART_ISR
+  -------         PROC          TIMER2_ISR
+  C:001EH         LINE#         81
+  C:001EH         LINE#         83
+  C:0020H         LINE#         84
+  C:0022H         LINE#         85
+  -------         ENDPROC       TIMER2_ISR
+  -------         PROC          I2C_ISR
+  C:0026H         LINE#         87
+  C:0026H         LINE#         89
+  C:0029H         LINE#         90
+  -------         ENDPROC       I2C_ISR
+  -------         PROC          SPI_ISR
+  C:003AH         LINE#         92
+  C:003AH         LINE#         94
+  C:003DH         LINE#         95
+  C:0040H         LINE#         96
+  -------         ENDPROC       SPI_ISR
+  -------         PROC          COM0_ISR
+  C:0042H         LINE#         99
+  C:0042H         LINE#         103
+  -------         ENDPROC       COM0_ISR
+  -------         PROC          COM1_ISR
+  C:004AH         LINE#         105
+  C:004AH         LINE#         109
+  -------         ENDPROC       COM1_ISR
+  -------         PROC          COM2_ISR
+  C:0052H         LINE#         111
+  C:0052H         LINE#         115
+  -------         ENDPROC       COM2_ISR
+  -------         PROC          COM3_ISR
+  C:0059H         LINE#         117
+  C:0059H         LINE#         121
+  -------         ENDPROC       COM3_ISR
+  -------         PROC          PWM1_ISR
+  C:0046H         LINE#         123
+  C:0046H         LINE#         125
+  C:0049H         LINE#         126
+  -------         ENDPROC       PWM1_ISR
+  -------         PROC          ADC_ISR
+  C:004EH         LINE#         129
+  C:004EH         LINE#         131
+  C:0051H         LINE#         132
+  -------         ENDPROC       ADC_ISR
+  -------         ENDMOD        ISR
+
+  -------         MODULE        ?C_STARTUP
+  C:002EH         SEGMENT       ?C_C51STARTUP
+  I:0008H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/30/2018  14:06:26  PAGE 6
+
+
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:0031H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:002EH         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:002EH         LINE#         133
+  C:0030H         LINE#         134
+  C:0031H         LINE#         135
+  C:0032H         LINE#         136
+  C:0034H         LINE#         185
+  C:0037H         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        OPTIONS_SN8F5702
+  N:000EH         SYMBOL        CLOCKSRC_SET
+  N:0006H         SYMBOL        LVDMODE_SET
+  N:0030H         SYMBOL        RESETPIN_SET
+  N:1000H         SYMBOL        ROM_SIZE
+  N:0001H         SYMBOL        SECURITY_SET
+  N:00C0H         SYMBOL        WATCHCLK_SET
+  N:0050H         SYMBOL        WATCHDOG_SET
+  -------         ENDMOD        OPTIONS_SN8F5702
+
+Program Size: data=9.0 xdata=0 code=187
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

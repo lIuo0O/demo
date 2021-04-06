@@ -1,0 +1,7 @@
+".\Output\Main.obj",
+".\Output\UART.obj",
+".\Output\Timer0.obj",
+".\Output\STARTUP.obj",
+".\Output\OPTIONS_SN8F5702.obj" 
+TO ".\Output\UART" 
+PRINT(".\LST\UART.m51") RAMSIZE(256) 

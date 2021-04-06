@@ -1,0 +1,48 @@
+C51 COMPILER V9.54   PWM                                                                   11/30/2018 15:41:13 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE PWM
+OBJECT MODULE PLACED IN .\Objects\PWM.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Source\PWM.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listing
+                    -s\PWM.lst) TABS(2) OBJECT(.\Objects\PWM.obj)
+
+line level    source
+
+   1          
+   2          #include "PWM.h"
+   3          
+   4          
+   5          void PWMinit(void)
+   6          {
+   7   1      //PWM1初始化 PWM1 rate is Fhosc/1  f_pwm1 = (32M/1)/3200 = 10KHz 占空比50%
+   8   1      //====================================================================================//
+   9   1        PW1YL = 0x80;                           
+  10   1        PW1YH = 0x0c;
+  11   1        
+  12   1        PW1DL = 0x40;                               
+  13   1        PW1DH = 0x06;
+  14   1        
+  15   1        PW1BL = PW1DL;
+  16   1        PW1BH = PW1DH;
+  17   1        
+  18   1        PW1A = 0x00;
+  19   1                   
+  20   1        PW1CH = L_PWM10_ENABLE | L_PWM11_ENABLE | L_PWM20_ENABLE | L_PWM21_ENABLE;  
+  21   1        PW1M = L_ENABLE_PWM | L_PWM_CLOCK_32MDIV1;                          
+  22   1      }
+  23          
+  24          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     28    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

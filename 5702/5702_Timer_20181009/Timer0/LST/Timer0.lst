@@ -1,0 +1,77 @@
+C51 COMPILER V9.56.0.0   TIMER0                                                            09/30/2018 14:31:03 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE TIMER0
+OBJECT MODULE PLACED IN .\Output\Timer0.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE SRC\Timer0.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\SRC) DEBUG OBJECTEXTEND P
+                    -RINT(.\LST\Timer0.lst) TABS(2) OBJECT(.\Output\Timer0.obj)
+
+line level    source
+
+   1          //  The program is an example of Timer0 to implement it.
+   2          //  you can select mode0~3 by "#define MODE Mode0~3" 
+   3          //  Timer 0 function List:
+   4          //      1. Mode 0 : 13-bit timer
+   5          //      2. Mode 1 : 16-bit timer
+   6          //      3. Mode 2 : 8 -bit auto-reload Timer
+   7          //      4. Mode 3 : Timer 0 acts as two independent 8 bit Timers ¡V TL0, TH0. Timer0 and Timer1
+   8          
+   9          #include "Timer0.h"
+  10          
+  11          //==============================================================================================//
+  12          //  Timer0 init
+  13          //==============================================================================================//
+  14          void Timer0init(void)
+  15          {
+  16   1        TMOD = L_TMOD_VALUE;          // Mode of Timer 0 
+  17   1        TCON0 = L_TCON0_VALUE;        // T0EXT = Fhosc.
+  18   1        TH0 = L_TH0_VALUE;            // Initial values
+  19   1        TL0 = L_TL0_VALUE;            // T0RATE is Fhosc/128 = 250K 
+  20   1        TR0 = 1;                      // Timer 0 enable
+  21   1        ET0 = 1;  
+  22   1      #if  L_MODE == L_MODEL3         //TWO 8BIT-TIME
+  23   1        ET1 = 1;                      // Timer 1 isr enable
+  24   1        TR1 = 1;                      // enable Timer 1 Run control
+  25   1      #endif                                                   
+  26   1      }
+  27          
+  28          //==============================================================================================//
+  29          //  Timer0 ISR
+  30          //==============================================================================================//
+  31          void Timer0ISR(void) interrupt ISRTimer0   // Vector @  0x0B
+  32          {
+  33   1      #if   L_MODE == L_MODEL3        // if Timer0 is Mode 3,The timer TL0 is controlled by T0    
+  34   1          TL0 = L_TL0_VALUE;  
+  35   1      #elif L_MODE != L_MODEL2        // if Timer0 is Mode 2, the TL0 will auto reload  
+                  TH0 = L_TH0_VALUE;          
+                  TL0 = L_TL0_VALUE;
+              #endif  
+  39   1          P14 = ~ P14;                // P1.4 toggle
+  40   1      }
+  41          
+  42          //==============================================================================================//
+  43          //  Timer1 ISR
+  44          //==============================================================================================//
+  45          #if L_MODE == L_MODEL3
+  46          void Timer1ISR(void) interrupt ISRTimer1   // Vector @  0x1B
+  47          { 
+  48   1          TH0 = L_TH0_VALUE;          // timer1 used
+  49   1          P16 = ~ P16;                // P1.6 toggle
+  50   1      }
+  51          #endif
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+C51 COMPILER V9.56.0.0   TIMER0                                                            09/30/2018 14:31:03 PAGE 2   
+
+   CODE SIZE        =     33    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

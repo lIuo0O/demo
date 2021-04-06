@@ -1,0 +1,171 @@
+C51 COMPILER V9.54   I2C_MASTER                                                            12/05/2018 13:26:02 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE I2C_MASTER
+OBJECT MODULE PLACED IN .\Objects\i2c_master.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Src\i2c_master.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Lis
+                    -tings\i2c_master.lst) TABS(2) OBJECT(.\Objects\i2c_master.obj)
+
+line level    source
+
+   1          #include "i2c_master.h"
+   2          /**************************************************************************************
+   3                                Global Variables 
+   4          ***************************************************************************************/
+   5          bit f_bI2cFlag ;
+   6          bit f_bI2cRx;
+   7          uint8_t g_cI2cDataBuf[MAX_BUF_LEN];
+   8          uint8_t g_cDevAddr;
+   9          uint8_t g_cDataAddr;
+  10          uint8_t g_cI2cDataLen;
+  11          uint8_t g_cI2cBufSize;
+  12          /**************************************************************************************
+  13          Function: set input pin
+  14                    Set slave addr
+  15                    I2C & Interrupt enable
+  16          ***************************************************************************************/
+  17          void i2c_master_init(void)
+  18          {
+  19   1        P0M &= 0xE7;
+  20   1        P0UR |= 0x18;                                     // set  SDA(P04) SCL(P03)  pin's at input mode
+  21   1        
+  22   1        I2CCON = 0x40;                                    // I2C enable (ENS1),Fclk = Fcpu/256
+  23   1      //  I2CCON = 0xC0;                                    // I2C enable (ENS1),Fclk = Fcpu/960
+  24   1      
+  25   1        SMBSEL = 0x05;                                    // Select the high byte of Tout Register.
+  26   1        SMBDST = TIME_PERIOD >> 8;
+  27   1        
+  28   1        SMBSEL = 0x04;                                    // Select the low byte of Tout Register
+  29   1        SMBDST = TIME_PERIOD;                             // 35ms
+  30   1        
+  31   1        SMBSEL |= 0x80;                                   // EnablE SMBus extension function 
+  32   1        
+  33   1        EI2C = 1;                                         // I2C Interrupt enable
+  34   1        EAL = 1;                                          // Interrupt enable
+  35   1      }
+  36          /**************************************************************************************
+  37          Function: Wait trasmit
+  38          ***************************************************************************************/
+  39          bit wait_finish (void)
+  40          {
+  41   1        uint16_t iRetry = 0;
+  42   1        while(f_bI2cFlag)                                 // Wait finish
+  43   1        {
+  44   2          iRetry++;
+  45   2          _nop_();
+  46   2          _nop_();
+  47   2          WDTR = 0x5A;                                    // Clear Watch Dog
+  48   2          if(iRetry >= WAIT_TIME)
+  49   2          {
+  50   3            return ERR;
+  51   3          }
+  52   2        }
+  53   1        
+  54   1        return OK;
+C51 COMPILER V9.54   I2C_MASTER                                                            12/05/2018 13:26:02 PAGE 2   
+
+  55   1      }
+  56          /**************************************************************************************
+  57          Function: I2C ISR Routine 
+  58          ***************************************************************************************/
+  59          void isr_i2c_master (void) interrupt ISRI2c                   
+  60          {
+  61   1        switch (I2CSTA)
+  62   1        {
+  63   2          // Master Transmit  Address
+  64   2          case I2C_START:
+  65   2          case I2C_RESTART:
+  66   2          {
+  67   3            I2CCON &= 0xCF;                             // Clear STOP & STA  
+  68   3            I2CDAT = g_cDevAddr;                        // Device addr
+  69   3            break;
+  70   3          }
+  71   2          
+  72   2          // Master Transmit
+  73   2          case I2C_MT_SLA_ACK:  
+  74   2          {     
+  75   3            g_cI2cBufSize = 0;
+  76   3              
+  77   3            I2CDAT = g_cDataAddr;                       // trasmit Data Address
+  78   3            break;
+  79   3          }
+  80   2          case I2C_MT_DATA_ACK:                         // write n byte
+  81   2          {
+  82   3            if(f_bI2cRx == 1)                           // Read Eeprom 
+  83   3            { 
+  84   4              f_bI2cRx = 0;                             // Clear Flag
+  85   4              g_cDevAddr = (g_cDevAddr & 0xFE) | EEPROM_READ; // Device Read Address  
+  86   4              I2CCON |= 0x20;                                 // RESTART = 1
+  87   4              break;
+  88   4            }
+  89   3            
+  90   3            if(g_cI2cBufSize >= g_cI2cDataLen)          // Last byte
+  91   3            {                             
+  92   4              I2CCON |= 0x10;                           // STOP 
+  93   4              f_bI2cFlag = 0;                           // finish 
+  94   4            }
+  95   3            else
+  96   3            {
+  97   4              I2CDAT = g_cI2cDataBuf[g_cI2cBufSize++];
+  98   4            }
+  99   3            break;
+ 100   3          }
+ 101   2              
+ 102   2          // Master Receive 
+ 103   2          case I2C_MR_SLA_ACK:                          // get slave addr
+ 104   2          {
+ 105   3            g_cI2cBufSize = 0;
+ 106   3          
+ 107   3            I2CCON |= 0x04;                             // AA = 1
+ 108   3            break;
+ 109   3          }
+ 110   2          case I2C_MR_DATA_ACK:                         // read n byte
+ 111   2          {
+ 112   3            g_cI2cDataBuf[g_cI2cBufSize++] = I2CDAT; 
+ 113   3            
+ 114   3            I2CCON |= 0x04;                             // AA = 1
+ 115   3            if (g_cI2cBufSize >= g_cI2cDataLen)
+ 116   3            {
+C51 COMPILER V9.54   I2C_MASTER                                                            12/05/2018 13:26:02 PAGE 3   
+
+ 117   4              I2CCON &= 0xFB;                           // AA = 0   
+ 118   4            }
+ 119   3      
+ 120   3            break;
+ 121   3          }
+ 122   2          case I2C_MR_DATA_NACK:  
+ 123   2          {
+ 124   3            g_cI2cDataBuf[g_cI2cBufSize] = I2CDAT; 
+ 125   3            
+ 126   3            I2CCON |= 0x10;                             // STOP   
+ 127   3            
+ 128   3            f_bI2cFlag = 0;                             // finish   
+ 129   3            
+ 130   3            break; 
+ 131   3          }
+ 132   2          default: 
+ 133   2          {
+ 134   3            I2CCON |= 0x10;                             // STOP   
+ 135   3      
+ 136   3            g_cI2cBufSize = 0;
+ 137   3            f_bI2cRx = 0;
+ 138   3            f_bI2cFlag = 0;                             // finish     
+ 139   3            break; 
+ 140   3          }
+ 141   2        }
+ 142   1        I2CCON &= 0xF7;                                 // Clear I2C flag         
+ 143   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    224    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      9    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      2    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

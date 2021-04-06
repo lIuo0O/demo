@@ -1,0 +1,192 @@
+C51 COMPILER V9.54   W25Q                                                                  11/06/2018 16:50:35 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE W25Q
+OBJECT MODULE PLACED IN .\Objects\w25q.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Src\w25q.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\
+                    -w25q.lst) TABS(2) OBJECT(.\Objects\w25q.obj)
+
+line level    source
+
+   1          #include "w25q.h"
+   2          #include "mspi.h"
+   3          /****************************************************************************************
+   4          Function:   W25Q Read Register
+   5          input:      None
+   6          Output:     None
+   7          Return:     None
+   8          ****************************************************************************************/
+   9          bit w25q_busy(void)
+  10          {
+  11   1        uint8_t cTemp;
+  12   1                      
+  13   1        O_IO_CS = 0;                                // Enable Slave
+  14   1      
+  15   1        spi_WtRd_Byte(W25Q_READ_STATUS1);           // Read Status Register Instruction
+  16   1        
+  17   1        cTemp = spi_WtRd_Byte(0xFF);                // Read Status  
+  18   1        
+  19   1        O_IO_CS = 1;                                // Disable Slave
+  20   1        
+  21   1        return (cTemp & 0x01) ;
+  22   1      }
+  23          /****************************************************************************************
+  24          Function:   W25Q Read Register
+  25          input:      None
+  26          Output:     None
+  27          Return:     None
+  28          ****************************************************************************************/
+  29          void w25q_write_enable(void)   
+  30          {
+  31   1        O_IO_CS = 0;                                // Enable Slave
+  32   1        
+  33   1        spi_WtRd_Byte(W25Q_WRITE_ENABLE);           // Send Write Enable Instruction       
+  34   1        
+  35   1        O_IO_CS = 1;                                // Disable Slave        
+  36   1      } 
+  37          /****************************************************************************************
+  38          Function:   W25Q Read Register
+  39          input:      None
+  40          Output:     None
+  41          Return:     None
+  42          ****************************************************************************************/
+  43          void w25q_write_disable(void)   
+  44          {  
+  45   1        O_IO_CS = 0;                                // Enable Slave
+  46   1        
+  47   1        spi_WtRd_Byte(W25Q_WRITE_DISABLE);          // Send Write Disable Instruction         
+  48   1        
+  49   1        O_IO_CS = 1;                                // Disable Slave      
+  50   1      }   
+  51          /****************************************************************************************
+  52          Function:   W25Q Erase Sector
+  53          input:      None
+  54          Output:     None
+C51 COMPILER V9.54   W25Q                                                                  11/06/2018 16:50:35 PAGE 2   
+
+  55          Return:     None
+  56          ****************************************************************************************/
+  57          void w25q_erase_sector(uint16_t iAddr)
+  58          {
+  59   1        while(w25q_busy());                           // Wait Bus Idle    
+  60   1        
+  61   1        w25q_write_enable();                          // Send Write Enable Instruction  
+  62   1        
+  63   1        O_IO_CS = 0;                                  // Enable Slave
+  64   1        
+  65   1        spi_WtRd_Byte(W25Q_SECTOR_ERASE);             // Send Erase Sector Enable Instruction 
+  66   1        
+  67   1        spi_WtRd_Byte((uint8_t) ((iAddr) >> 16));     // Send Address
+  68   1        spi_WtRd_Byte((uint8_t) ((iAddr) >> 8));
+  69   1        spi_WtRd_Byte((uint8_t) iAddr);
+  70   1        
+  71   1        O_IO_CS = 1;                                  // Disable Slave
+  72   1      }
+  73          /****************************************************************************************
+  74          Function:   W25Q Read Data
+  75          input:      None
+  76          Output:     None
+  77          Return:     None
+  78          ****************************************************************************************/
+  79          void w25q_read_data(uint32_t lReadAddr, uint8_t * p_cBuffer, uint16_t iNumByteToRead)
+  80          {     
+  81   1        while(w25q_busy());                           // Wait Bus Idle  
+  82   1        
+  83   1        O_IO_CS = 0;                                  // Enable Slave
+  84   1          
+  85   1        spi_WtRd_Byte(W25Q_READ_DATA);                // Send Read Instruction
+  86   1        
+  87   1        spi_WtRd_Byte((uint8_t) (lReadAddr >> 16));   // Send Read Address (8 Bytes)
+  88   1        spi_WtRd_Byte((uint8_t) (lReadAddr >> 8));
+  89   1        spi_WtRd_Byte((uint8_t) lReadAddr);
+  90   1      
+  91   1        while(iNumByteToRead--)
+  92   1        {
+  93   2          *p_cBuffer++ = spi_WtRd_Byte(0xFF);         // Read Data
+  94   2        }
+  95   1        
+  96   1        O_IO_CS = 1;                                  // Disable Slave
+  97   1      }
+  98          /****************************************************************************************
+  99          Function:   W25Q Write byte
+ 100          input:      None
+ 101          Output:     None
+ 102          Return:     None
+ 103          ****************************************************************************************/
+ 104          void w25q_write_256bytes(uint32_t lWriteAddr, uint8_t * p_cBuffer, uint16_t iNumByteToWrite)
+ 105          {
+ 106   1        uint16_t iSectAdr;
+ 107   1        
+ 108   1        iSectAdr = lWriteAddr / 4096;                   // 128(block) * 16(sector) = 2048(sector)  4KB(Each sector) = 4 * 
+             -1024 = 4096 (Byte)
+ 109   1        w25q_erase_sector(iSectAdr);                    // Erase Sector
+ 110   1        
+ 111   1        while(w25q_busy());                             // Wait Bus Idle    
+ 112   1        
+ 113   1        w25q_write_enable();                            // Send Write Enable Instruction
+ 114   1      
+ 115   1        O_IO_CS = 0;                                    // Enable Slave
+C51 COMPILER V9.54   W25Q                                                                  11/06/2018 16:50:35 PAGE 3   
+
+ 116   1        
+ 117   1        spi_WtRd_Byte(W25Q_PAGE_PROGRAM);               // Send Page Program Instruction
+ 118   1        
+ 119   1        spi_WtRd_Byte((uint8_t) ((lWriteAddr) >> 16));  // Send Write Address (8 Bytes)
+ 120   1        spi_WtRd_Byte((uint8_t) ((lWriteAddr) >> 8));
+ 121   1        spi_WtRd_Byte((uint8_t) lWriteAddr);
+ 122   1      
+ 123   1        while(iNumByteToWrite--)
+ 124   1        {
+ 125   2          spi_WtRd_Byte(*p_cBuffer++);                  // Send Data
+ 126   2        }
+ 127   1        
+ 128   1        while(w25q_busy());                             // Wait Bus Idle  
+ 129   1        
+ 130   1        O_IO_CS = 1;                                    // Disable Slave
+ 131   1        
+ 132   1        w25q_write_disable();                           // Send Write Disable  
+ 133   1      }
+ 134          /****************************************************************************************
+ 135          Function:   Read W25Q ID 
+ 136          input:      None
+ 137          Output:     None
+ 138          Return:     None
+ 139          ****************************************************************************************/
+ 140          //0XEF13,表示芯片型号为W25Q80
+ 141          //0XEF14,表示芯片型号为W25Q16
+ 142          //0XEF15,表示芯片型号为W25Q32
+ 143          //0XEF16,表示芯片型号为W25Q64
+ 144          //0XEF17,表示芯片型号为W25Q128
+ 145          void w25q_read_id (void)
+ 146          {
+ 147   1        static uint16_t g_iId;
+ 148   1        
+ 149   1        while(w25q_busy());                             // Wait Bus Idle  
+ 150   1        
+ 151   1        O_IO_CS = 0;                                    // Enable Slave
+ 152   1        
+ 153   1        spi_WtRd_Byte(0x90);                
+ 154   1        spi_WtRd_Byte(0x00);
+ 155   1        spi_WtRd_Byte(0x00);
+ 156   1        spi_WtRd_Byte(0x00);                            // Send Read Device ID Instruction
+ 157   1        
+ 158   1        g_iId = 0;
+ 159   1        g_iId |= spi_WtRd_Byte(0xFF) << 8;              // Read ID
+ 160   1        g_iId |= spi_WtRd_Byte(0xFF);
+ 161   1        
+ 162   1        O_IO_CS = 1;                                    // Disable Slave
+ 163   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    367    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2      20
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

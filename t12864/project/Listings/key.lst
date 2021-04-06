@@ -1,0 +1,703 @@
+C51 COMPILER V9.56.0.0   KEY                                                               03/01/2021 16:54:13 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE KEY
+OBJECT MODULE PLACED IN .\Objects\key.obj
+COMPILER INVOKED BY: D:\software\keil5\C51\BIN\C51.EXE ..\c\key.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\c;..\h) DEBUG OBJEC
+                    -TEXTEND CODE LISTINCLUDE SYMBOLS PRINT(.\Listings\key.lst) OBJECT(.\Objects\key.obj)
+
+line level    source
+
+   1          #include <sn8f5804.h>
+   1      =1  /*--------------------------------------------------------------------------
+   2      =1  SN8F5804.H
+   3      =1  
+   4      =1  Header file for SNOiX SN8F5804 microcontroller.
+   5      =1  Copyright (c) 2015 SONiX Technology Co., Ltd.
+   6      =1  
+   7      =1  Version 1.0    2015-08-19
+   8      =1  Version 1.3    2015-09-09
+   9      =1  Version 1.7    2015-10-14
+  10      =1  --------------------------------------------------------------------------*/
+  11      =1  
+  12      =1  #ifndef __SN8F5804_H__
+  13      =1  #define __SN8F5804_H__
+  14      =1  
+  15      =1  /*      Register      */
+  16      =1  sfr     P0       = 0x80;
+  17      =1    sbit  P07      = P0^7;
+  18      =1    sbit  P06      = P0^6;
+  19      =1    sbit  P05      = P0^5;
+  20      =1    sbit  P04      = P0^4;
+  21      =1    sbit  P03      = P0^3;
+  22      =1    sbit  P02      = P0^2;
+  23      =1    sbit  P01      = P0^1;
+  24      =1    sbit  P00      = P0^0;
+  25      =1  sfr     SP       = 0x81;
+  26      =1  sfr     DPL      = 0x82;
+  27      =1  sfr     DPH      = 0x83;
+  28      =1  sfr     WDTR     = 0x86;
+  29      =1  sfr     PCON     = 0x87;
+  30      =1  sfr     TCON     = 0x88;
+  31      =1    sbit  TF1      = TCON^7;
+  32      =1    sbit  TR1      = TCON^6;
+  33      =1    sbit  TF0      = TCON^5;
+  34      =1    sbit  TR0      = TCON^4;
+  35      =1    sbit  IE1      = TCON^3;
+  36      =1    sbit  IE0      = TCON^1;
+  37      =1  sfr     TMOD     = 0x89;
+  38      =1  sfr     TL0      = 0x8A;
+  39      =1  sfr     TL1      = 0x8B;
+  40      =1  sfr     TH0      = 0x8C;
+  41      =1  sfr     TH1      = 0x8D;
+  42      =1  sfr     CKCON    = 0x8E;
+  43      =1  sfr     PEDGE    = 0x8F;
+  44      =1  sfr     P1       = 0x90;
+  45      =1    sbit  P17      = P1^7;
+  46      =1    sbit  P16      = P1^6;
+  47      =1    sbit  P15      = P1^5;
+  48      =1    sbit  P14      = P1^4;
+  49      =1    sbit  P13      = P1^3;
+  50      =1    sbit  P12      = P1^2;
+  51      =1    sbit  P11      = P1^1;
+  52      =1    sbit  P10      = P1^0;
+  53      =1  sfr     P1W      = 0x91;
+C51 COMPILER V9.56.0.0   KEY                                                               03/01/2021 16:54:13 PAGE 2   
+
+  54      =1  sfr     DPC      = 0x93;
+  55      =1  sfr     PECMD    = 0x94;
+  56      =1  sfr16   PEROM    = 0x95;
+  57      =1  sfr     PEROML   = 0x95;
+  58      =1  sfr     PEROMH   = 0x96;
+  59      =1  sfr     PERAM    = 0x97;
+  60      =1  sfr     S0CON    = 0x98;
+  61      =1    sbit  SM0      = S0CON^7;
+  62      =1    sbit  SM1      = S0CON^6;
+  63      =1    sbit  SM20     = S0CON^5;
+  64      =1    sbit  REN0     = S0CON^4;
+  65      =1    sbit  TB80     = S0CON^3;
+  66      =1    sbit  RB80     = S0CON^2;
+  67      =1    sbit  TI0      = S0CON^1;
+  68      =1    sbit  RI0      = S0CON^0;
+  69      =1  sfr     S0BUF    = 0x99;
+  70      =1  sfr     IEN2     = 0x9A;
+  71      =1  sfr     P0CON    = 0x9E;
+  72      =1  sfr     P1CON    = 0x9F;
+  73      =1  sfr     P2       = 0xA0;
+  74      =1    sbit  P27      = P2^7;
+  75      =1    sbit  P26      = P2^6;
+  76      =1    sbit  P25      = P2^5;
+  77      =1    sbit  P24      = P2^4;
+  78      =1    sbit  P23      = P2^3;
+  79      =1    sbit  P22      = P2^2;
+  80      =1    sbit  P21      = P2^1;
+  81      =1    sbit  P20      = P2^0;
+  82      =1  sfr     LCDCON   = 0xA1;
+  83      =1  sfr     LCDMOD   = 0xA2;
+  84      =1  sfr     LCDSEG   = 0xA3;
+  85      =1  sfr     LCDBUF   = 0xA4;
+  86      =1  sfr     LCDADR   = 0xA5;
+  87      =1  sfr     CSCON    = 0xA6;
+  88      =1  sfr     CSMOD    = 0xA7;
+  89      =1  sfr     IEN0     = 0xA8;
+  90      =1    sbit   EAL     = IEN0^7;
+  91      =1    sbit   ET2     = IEN0^5;
+  92      =1    sbit   ES0     = IEN0^4;
+  93      =1    sbit   ET1     = IEN0^3;
+  94      =1    sbit   EX1     = IEN0^2;
+  95      =1    sbit   ET0     = IEN0^1;
+  96      =1    sbit   EX0     = IEN0^0;
+  97      =1  sfr     IP0      = 0xA9;
+  98      =1  sfr     S0RELL   = 0xAA;
+  99      =1  sfr     PW1M     = 0xAB;
+ 100      =1  sfr16   PW1Y     = 0xAC;
+ 101      =1  sfr     PW1YL    = 0xAC;
+ 102      =1  sfr     PW1YH    = 0xAD;
+ 103      =1  sfr16   PW1B     = 0xAE;
+ 104      =1  sfr     PW1BL    = 0xAE;
+ 105      =1  sfr     PW1BH    = 0xAF;
+ 106      =1  sfr     P3       = 0xB0;
+ 107      =1    sbit  P31      = P3^1;
+ 108      =1    sbit  P30      = P3^0;
+ 109      =1  sfr     CSC      = 0xB1;
+ 110      =1  sfr     CYC      = 0xB2;
+ 111      =1  sfr     ACNT     = 0xB3;
+ 112      =1  sfr     BCNT     = 0xB4;
+ 113      =1  sfr     CCNT     = 0xB5;
+ 114      =1  sfr     DCNT     = 0xB6;
+ 115      =1  sfr     PWFLM    = 0xB7;
+C51 COMPILER V9.56.0.0   KEY                                                               03/01/2021 16:54:13 PAGE 3   
+
+ 116      =1  sfr     IEN1     = 0xB8;
+ 117      =1    sbit  ET2RL    = IEN1^7;
+ 118      =1    sbit  ET2C3    = IEN1^5;
+ 119      =1    sbit  ET2C2    = IEN1^4;
+ 120      =1    sbit  ET2C1    = IEN1^3;
+ 121      =1    sbit  ET2C0    = IEN1^2;
+ 122      =1    sbit  ESPI     = IEN1^1;
+ 123      =1    sbit  EI2C     = IEN1^0;
+ 124      =1  sfr     IP1      = 0xB9;
+ 125      =1  sfr     S0RELH   = 0xBA;
+ 126      =1  sfr16   PW1D     = 0xBB;
+ 127      =1  sfr     PW1DL    = 0xBB;
+ 128      =1  sfr     PW1DH    = 0xBC;
+ 129      =1  sfr     PW1A     = 0xBD;
+ 130      =1  sfr     PW1CH    = 0xBE;
+ 131      =1  sfr     IRCON2   = 0xBF;
+ 132      =1  sfr     IRCON    = 0xC0;
+ 133      =1    sbit   TF2RL   = IRCON^7;
+ 134      =1    sbit   TF2     = IRCON^6;
+ 135      =1    sbit   TF2C3   = IRCON^5;
+ 136      =1    sbit   TF2C2   = IRCON^4;
+ 137      =1    sbit   TF2C1   = IRCON^3;
+ 138      =1    sbit   TF2C0   = IRCON^2;
+ 139      =1  sfr     CCEN     = 0xC1;
+ 140      =1  sfr     CCL1     = 0xC2;
+ 141      =1  sfr     CCH1     = 0xC3;
+ 142      =1  sfr     CCL2     = 0xC4;
+ 143      =1  sfr     CCH2     = 0xC5;
+ 144      =1  sfr     CCL3     = 0xC6;
+ 145      =1  sfr     CCH3     = 0xC7;
+ 146      =1  sfr     T2CON    = 0xC8;
+ 147      =1    sbit  T2PS     = T2CON^7;
+ 148      =1    sbit  I3FR     = T2CON^6;
+ 149      =1    sbit  GF1      = T2CON^5;
+ 150      =1    sbit  T2R1     = T2CON^4;
+ 151      =1    sbit  T2R0     = T2CON^3;
+ 152      =1    sbit  T2CM     = T2CON^2;
+ 153      =1    sbit  T2I1     = T2CON^1;
+ 154      =1    sbit  T2I0     = T2CON^0;
+ 155      =1  sfr     CRCL     = 0xCA;
+ 156      =1  sfr     CRCH     = 0xCB;
+ 157      =1  sfr     TL2      = 0xCC;
+ 158      =1  sfr     TH2      = 0xCD;
+ 159      =1  sfr     CSRS     = 0xCE;
+ 160      =1  sfr     PSW      = 0xD0;
+ 161      =1    sbit  CY       = PSW^7;
+ 162      =1    sbit  AC       = PSW^6;
+ 163      =1    sbit  F0       = PSW^5;
+ 164      =1    sbit  RS1      = PSW^4;
+ 165      =1    sbit  RS0      = PSW^3;
+ 166      =1    sbit  OV       = PSW^2;
+ 167      =1    sbit  F1       = PSW^1;
+ 168      =1    sbit  P        = PSW^0;
+ 169      =1  sfr     ADM      = 0xD2;
+ 170      =1  sfr     ADB      = 0xD3;
+ 171      =1  sfr     ADR      = 0xD4;
+ 172      =1  sfr     VREFH    = 0xD5;
+ 173      =1  sfr     P2CON    = 0xD6;
+ 174      =1  sfr     P3CON    = 0xD7;
+ 175      =1  sfr     S0CON2   = 0xD8;
+ 176      =1    sbit  BD       = S0CON2^7;
+ 177      =1  sfr     ADT      = 0xD9;
+C51 COMPILER V9.56.0.0   KEY                                                               03/01/2021 16:54:13 PAGE 4   
+
+ 178      =1  sfr     I2CDAT   = 0xDA;
+ 179      =1  sfr     I2CADR   = 0xDB;
+ 180      =1  sfr     I2CCON   = 0xDC;
+ 181      =1  sfr     I2CSTA   = 0xDD;
+ 182      =1  sfr     SMBSEL   = 0xDE;
+ 183      =1  sfr     SMBDST   = 0xDF;
+ 184      =1  sfr     ACC      = 0xE0;
+ 185      =1  sfr     SPSTA    = 0xE1;
+ 186      =1  sfr     SPCON    = 0xE2;
+ 187      =1  sfr     SPDAT    = 0xE3;
+ 188      =1  sfr     P0OC     = 0xE4;
+ 189      =1  sfr     CLKSEL   = 0xE5;
+ 190      =1  sfr     CLKCMD   = 0xE6;
+ 191      =1  sfr     TCON0    = 0xE7;
+ 192      =1  sfr     B        = 0xF0;
+ 193      =1  sfr     P0UR     = 0xF1;
+ 194      =1  sfr     P1UR     = 0xF2;
+ 195      =1  sfr     P2UR     = 0xF3;
+ 196      =1  sfr     P3UR     = 0xF4;
+ 197      =1  sfr     SRST     = 0xF7;
+ 198      =1  sfr     P0M      = 0xF9;
+ 199      =1  sfr     P1M      = 0xFA;
+ 200      =1  sfr     P2M      = 0xFB;
+ 201      =1  sfr     P3M      = 0xFC;
+ 202      =1  sfr     PFLAG    = 0xFF;
+ 203      =1  
+ 204      =1  /*      Interrupt Vector      */
+ 205      =1  #define ISRInt0    0
+ 206      =1  #define ISRTimer0  1
+ 207      =1  #define ISRInt1    2
+ 208      =1  #define ISRTimer1  3
+ 209      =1  #define ISRUart    4
+ 210      =1  #define ISRTimer2  5
+ 211      =1  #define ISRI2c     8
+ 212      =1  #define ISRSpi     9
+ 213      =1  #define ISRCom0    10
+ 214      =1  #define ISRCom1    11
+ 215      =1  #define ISRCom2    12
+ 216      =1  #define ISRCom3    13
+ 217      =1  #define ISRCS      16
+ 218      =1  #define ISRAdc     17
+ 219      =1  #define ISRPwm1    18
+ 220      =1  #define ISRInt2    29
+ 221      =1  
+ 222      =1  /*      C51 Macros      */
+ 223      =1  #ifdef __C51__
+ 224      =1  #include <intrins.h>
+   1      =2  /*--------------------------------------------------------------------------
+   2      =2  INTRINS.H
+   3      =2  
+   4      =2  Intrinsic functions for C51.
+   5      =2  Copyright (c) 1988-2010 Keil Elektronik GmbH and ARM Germany GmbH
+   6      =2  All rights reserved.
+   7      =2  --------------------------------------------------------------------------*/
+   8      =2  
+   9      =2  #ifndef __INTRINS_H__
+  10      =2  #define __INTRINS_H__
+  11      =2  
+  12      =2  #pragma SAVE
+  13      =2  
+  14      =2  #if defined (__CX2__)
+           =2 #pragma FUNCTIONS(STATIC)
+C51 COMPILER V9.56.0.0   KEY                                                               03/01/2021 16:54:13 PAGE 5   
+
+           =2 /* intrinsic functions are reentrant, but need static attribute */
+           =2 #endif
+  18      =2  
+  19      =2  extern void          _nop_     (void);
+  20      =2  extern bit           _testbit_ (bit);
+  21      =2  extern unsigned char _cror_    (unsigned char, unsigned char);
+  22      =2  extern unsigned int  _iror_    (unsigned int,  unsigned char);
+  23      =2  extern unsigned long _lror_    (unsigned long, unsigned char);
+  24      =2  extern unsigned char _crol_    (unsigned char, unsigned char);
+  25      =2  extern unsigned int  _irol_    (unsigned int,  unsigned char);
+  26      =2  extern unsigned long _lrol_    (unsigned long, unsigned char);
+  27      =2  extern unsigned char _chkfloat_(float);
+  28      =2  #if defined (__CX2__)
+           =2 extern int           abs       (int);
+           =2 extern void          _illop_   (void);
+           =2 #endif
+  32      =2  #if !defined (__CX2__)
+  33      =2  extern void          _push_    (unsigned char _sfr);
+  34      =2  extern void          _pop_     (unsigned char _sfr);
+  35      =2  #endif
+  36      =2  
+  37      =2  #pragma RESTORE
+  38      =2  
+  39      =2  #endif
+  40      =2  
+ 225      =1  #define IDLE() {unsigned char data var_idle=PCON; var_idle |= 0x01; PCON = var_idle; }
+ 226      =1  #define STOP() {if (EAL == 0) {PCON |= 0x02;} else {EAL = 0; PCON |= 0x02; EAL = 1;}}
+ 227      =1  #define PISP(ROM_ADDRESS, RAM_ADDRESS) {PERAM = (RAM_ADDRESS); PEROM = ((ROM_ADDRESS) & 0xFFE0); if (EAL =
+             -= 0) {PECMD = 0x5A; _nop_(); _nop_();} else {EAL = 0; PECMD = 0x5A; _nop_(); _nop_(); EAL = 1;}}
+ 228      =1  #define BISP(ROM_ADDRESS, RAM_ADDRESS) {PERAM = (RAM_ADDRESS); PEROM = ((ROM_ADDRESS) & 0xFFFF); if (EAL =
+             -= 0) {PECMD = 0x1E; _nop_(); _nop_();} else {EAL = 0; PECMD = 0x1E; _nop_(); _nop_(); EAL = 1;}}
+ 229      =1  
+ 230      =1  #endif  // __C51__
+ 231      =1  
+ 232      =1  #ifndef uint8_t
+ 233      =1  #define uint8_t unsigned char
+ 234      =1  #endif  // uint8_t
+ 235      =1  
+ 236      =1  #ifndef uint16_t
+ 237      =1  #define uint16_t unsigned int
+ 238      =1  #endif  // uint16_t
+ 239      =1  
+ 240      =1  #ifndef uint32_t
+ 241      =1  #define uint32_t unsigned long
+ 242      =1  #endif  // uint32_t
+ 243      =1  
+ 244      =1  #endif  // __SN8F5804_H__
+   2          #include "key.h"
+   1      =1  #ifndef __KEY_H
+   2      =1  #define __KEY_H
+   3      =1  
+   4      =1  #define   KEY_NULL                   0x00
+   5      =1  #define   KEY1_CLICK                 0x01
+   6      =1  #define   KEY2_CLICK                 0x02
+   7      =1  #define   KEY3_CLICK                 0x04
+   8      =1  #define   KEY4_CLICK                 0x08
+   9      =1  
+  10      =1  #define   KEY_DOWN_CONFIRM           0x06
+  11      =1  #define   KEY_DOWN_MAX               0x10
+  12      =1  #define   KEY_UP_CONFIRM             0x08
+  13      =1  #define   KEY_UP_MAX                 0x10
+  14      =1  
+C51 COMPILER V9.56.0.0   KEY                                                               03/01/2021 16:54:13 PAGE 6   
+
+  15      =1  struct Key {
+  16      =1      unsigned char up_count;
+  17      =1      unsigned char down_count;
+  18      =1      unsigned char union_val;
+  19      =1      unsigned char down_val;
+  20      =1      unsigned char new_val;
+  21      =1      unsigned char gui_id;
+  22      =1      unsigned char product_id;
+  23      =1      
+  24      =1      unsigned char select_id;
+  25      =1      unsigned char scan_tick:1;
+  26      =1      unsigned char handler_tick:1;
+  27      =1  };
+  28      =1  
+  29      =1  void scan_key(void);
+  30      =1  void handle_key(void);
+  31      =1  #endif
+  32      =1  /**
+  33      =1  
+  34      =1  
+  35      =1  **/
+   3          #include "lcd.h"
+   1      =1  #ifndef __LCD_H
+   2      =1  #define __LCD_H
+   3      =1  
+   4      =1  #define  LCD_SERIAL                  0x00
+   5      =1  #define  LCD_PARALLEL                0x01
+   6      =1  
+   7      =1  #define  LCD_PSB_MODE                LCD_SERIAL
+   8      =1  
+   9      =1  #define  DELAY_MS_START              0x29b
+  10      =1  
+  11      =1  #define  CMD_TYPE                    0x00
+  12      =1  #define  DATA_TYPE                   0x01
+  13      =1  
+  14      =1  #define  LCD_ON                      0x01
+  15      =1  #define  LCD_OFF                     0x00
+  16      =1  
+  17      =1  
+  18      =1  #define  LCD_TEXT_MODE               0x30
+  19      =1  #define  LCD_GRAPH_MODE              0x36
+  20      =1  
+  21      =1  #define  DELAY_NMS                   0x03
+  22      =1  #define  DELAY_NUS                   0x0a
+  23      =1  
+  24      =1  #define  LCD_LEN                     0x40
+  25      =1  
+  26      =1  #define  STRS_LEN                    0x0c
+  27      =1  
+  28      =1  #define  GUI2_HEAD_LEN               0x05
+  29      =1  #define  ROW1_HEAD                   0x80
+  30      =1  #define  ROW2_HEAD                   0x90
+  31      =1  #define  ROW3_HEAD                   0x88
+  32      =1  #define  ROW4_HEAD                   0x98
+  33      =1  
+  34      =1  #define  ROW1_BODY                   0x82
+  35      =1  #define  ROW2_BODY                   0x92
+  36      =1  #define  ROW3_BODY                   0x8a
+  37      =1  #define  ROW4_BODY                   0x9a
+  38      =1  
+  39      =1  #define  BUFFER_LEN                  0x0c
+  40      =1  //BUFFER_LEN 不良描述固定占用12个字符
+C51 COMPILER V9.56.0.0   KEY                                                               03/01/2021 16:54:13 PAGE 7   
+
+  41      =1  
+  42      =1  #define  GUI3_ROW_LEN                0x0b
+  43      =1  
+  44      =1  struct Lcd {
+  45      =1      
+  46      =1      unsigned char gui_id;
+  47      =1      
+  48      =1      unsigned char buffer[STRS_LEN];
+  49      =1  
+  50      =1      
+  51      =1      unsigned char pos;                  // 行定入时的行首定位
+  52      =1      unsigned char *str;                 // 
+  53      =1      unsigned char err_index;            // 当前的错误ID下标
+  54      =1      unsigned char err_len;              // err_ids 的有效长度  
+  55      =1      unsigned char err_ids[BUFFER_LEN];  // http返回的错误ID列表
+  56      =1      unsigned char on:1;
+  57      =1      unsigned char updated:1;
+  58      =1  };
+  59      =1  
+  60      =1  void init_lcd(void);
+  61      =1  
+  62      =1  void switch_lcd(unsigned char state);
+  63      =1  
+  64      =1  void write_byte(unsigned char type, unsigned char dat);
+  65      =1  
+  66      =1  void display(void);
+  67      =1  
+  68      =1  
+  69      =1  
+  70      =1  #endif
+   4          /*******************************************************************************************/
+   5          struct Key key;
+   6          extern struct Lcd lcd;
+   7          /*******************************************************************************************/
+   8          void scan_key(void){
+   9   1          if(key.scan_tick == 0) return;
+  10   1          key.scan_tick = 0;
+  11   1          key.union_val = ~(P2 | 0xf0);
+  12   1          if(key.union_val == KEY_NULL){
+  13   2              if(key.up_count < KEY_UP_MAX){
+  14   3                  key.up_count++;
+  15   3              }
+  16   2              if( key.up_count > KEY_UP_CONFIRM ){
+  17   3                  if(key.down_count > KEY_DOWN_CONFIRM){
+  18   4                      key.new_val = key.down_val;
+  19   4                  }
+  20   3                  key.down_count = 0;
+  21   3              }
+  22   2          }else{
+  23   2              if(key.union_val == key.down_val){
+  24   3                  if(key.down_count < KEY_DOWN_MAX){
+  25   4                      key.down_count++;
+  26   4                  }
+  27   3              }else{
+  28   3                  key.down_count = 0;
+  29   3                  key.down_val = key.union_val;
+  30   3              }
+  31   2          }
+  32   1      }
+  33          
+  34          
+  35          void handle_key(void){
+C51 COMPILER V9.56.0.0   KEY                                                               03/01/2021 16:54:13 PAGE 8   
+
+  36   1          if(key.handler_tick == 0) return;
+  37   1          key.handler_tick = 0;
+  38   1          if(key.new_val == KEY_NULL) return;
+  39   1          switch(key.new_val){
+  40   2              case KEY1_CLICK:
+  41   2                  lcd.pos = ROW4_BODY;
+  42   2                  if(lcd.err_index < lcd.err_len - 1){
+  43   3                      lcd.err_index++;
+  44   3                  }else{
+  45   3                      lcd.err_index = 0;
+  46   3                  }
+  47   2                  lcd.updated = 0;
+  48   2                  break;
+  49   2              case KEY2_CLICK:
+  50   2                  lcd.pos = ROW4_BODY;
+  51   2                  if(lcd.err_index > 0){
+  52   3                      lcd.err_index--;
+  53   3                  }else{
+  54   3                      lcd.err_index = lcd.err_len - 1;
+  55   3                  }
+  56   2                  lcd.updated = 0;
+  57   2                  break;
+  58   2              case KEY3_CLICK:
+  59   2                  
+  60   2                  break;
+  61   2              case KEY4_CLICK:
+  62   2                  // set json:id=id&ok=ok&ng=ng
+  63   2                  break;
+  64   2              default:
+  65   2                  break;
+  66   2          }
+  67   1          key.new_val = KEY_NULL;
+  68   1      }
+C51 COMPILER V9.56.0.0   KEY                                                               03/01/2021 16:54:13 PAGE 9   
+
+ASSEMBLY LISTING OF GENERATED OBJECT CODE
+
+
+             ; FUNCTION scan_key (BEGIN)
+                                           ; SOURCE LINE # 8
+                                           ; SOURCE LINE # 9
+0000 E500        R     MOV     A,key+08H
+0002 30E03F            JNB     ACC.0,?C0002
+0005         ?C0001:
+                                           ; SOURCE LINE # 10
+0005 5300FE      R     ANL     key+08H,#0FEH
+                                           ; SOURCE LINE # 11
+0008 E5A0              MOV     A,P2
+000A 44F0              ORL     A,#0F0H
+000C F4                CPL     A
+000D F500        R     MOV     key+02H,A
+                                           ; SOURCE LINE # 12
+000F 701E              JNZ     ?C0003
+                                           ; SOURCE LINE # 13
+0011 E500        R     MOV     A,key
+0013 C3                CLR     C
+0014 9410              SUBB    A,#010H
+0016 5002              JNC     ?C0004
+                                           ; SOURCE LINE # 14
+0018 0500        R     INC     key
+                                           ; SOURCE LINE # 15
+001A         ?C0004:
+                                           ; SOURCE LINE # 16
+001A E500        R     MOV     A,key
+001C D3                SETB    C
+001D 9408              SUBB    A,#08H
+001F 4023              JC      ?C0002
+                                           ; SOURCE LINE # 17
+0021 E500        R     MOV     A,key+01H
+0023 D3                SETB    C
+0024 9406              SUBB    A,#06H
+0026 4003              JC      ?C0006
+                                           ; SOURCE LINE # 18
+0028 850000      R     MOV     key+04H,key+03H
+                                           ; SOURCE LINE # 19
+002B         ?C0006:
+                                           ; SOURCE LINE # 20
+002B E4                CLR     A
+002C F500        R     MOV     key+01H,A
+                                           ; SOURCE LINE # 21
+                                           ; SOURCE LINE # 22
+002E 22                RET     
+002F         ?C0003:
+                                           ; SOURCE LINE # 23
+002F E500        R     MOV     A,key+02H
+0031 B5000A      R     CJNE    A,key+03H,?C0008
+                                           ; SOURCE LINE # 24
+0034 E500        R     MOV     A,key+01H
+0036 C3                CLR     C
+0037 9410              SUBB    A,#010H
+0039 5009              JNC     ?C0002
+                                           ; SOURCE LINE # 25
+003B 0500        R     INC     key+01H
+                                           ; SOURCE LINE # 26
+                                           ; SOURCE LINE # 27
+003D 22                RET     
+003E         ?C0008:
+C51 COMPILER V9.56.0.0   KEY                                                               03/01/2021 16:54:13 PAGE 10  
+
+                                           ; SOURCE LINE # 28
+003E E4                CLR     A
+003F F500        R     MOV     key+01H,A
+                                           ; SOURCE LINE # 29
+0041 850000      R     MOV     key+03H,key+02H
+                                           ; SOURCE LINE # 30
+                                           ; SOURCE LINE # 31
+                                           ; SOURCE LINE # 32
+0044         ?C0002:
+0044 22                RET     
+             ; FUNCTION scan_key (END)
+
+             ; FUNCTION handle_key (BEGIN)
+                                           ; SOURCE LINE # 35
+                                           ; SOURCE LINE # 36
+0000 E500        R     MOV     A,key+08H
+0002 30E13F            JNB     ACC.1,?C0012
+0005         ?C0011:
+                                           ; SOURCE LINE # 37
+0005 5300FD      R     ANL     key+08H,#0FDH
+                                           ; SOURCE LINE # 38
+0008 E500        R     MOV     A,key+04H
+000A 6038              JZ      ?C0012
+000C         ?C0013:
+                                           ; SOURCE LINE # 39
+000C E500        R     MOV     A,key+04H
+000E 24FE              ADD     A,#0FEH
+0010 6019              JZ      ?C0018
+0012 04                INC     A
+0013 702C              JNZ     ?C0014
+                                           ; SOURCE LINE # 40
+0015         ?C0015:
+                                           ; SOURCE LINE # 41
+0015 75009A      E     MOV     lcd+0DH,#09AH
+                                           ; SOURCE LINE # 42
+0018 E500        E     MOV     A,lcd+012H
+001A 14                DEC     A
+001B FF                MOV     R7,A
+001C E500        E     MOV     A,lcd+011H
+001E C3                CLR     C
+001F 9F                SUBB    A,R7
+0020 5004              JNC     ?C0016
+                                           ; SOURCE LINE # 43
+0022 0500        E     INC     lcd+011H
+                                           ; SOURCE LINE # 44
+0024 8018              SJMP    ?C0024
+0026         ?C0016:
+                                           ; SOURCE LINE # 45
+0026 E4                CLR     A
+0027 F500        E     MOV     lcd+011H,A
+                                           ; SOURCE LINE # 46
+0029         ?C0017:
+                                           ; SOURCE LINE # 47
+                                           ; SOURCE LINE # 48
+0029 8013              SJMP    ?C0024
+                                           ; SOURCE LINE # 49
+002B         ?C0018:
+                                           ; SOURCE LINE # 50
+002B 75009A      E     MOV     lcd+0DH,#09AH
+                                           ; SOURCE LINE # 51
+002E E500        E     MOV     A,lcd+011H
+0030 D3                SETB    C
+C51 COMPILER V9.56.0.0   KEY                                                               03/01/2021 16:54:13 PAGE 11  
+
+0031 9400              SUBB    A,#00H
+0033 4004              JC      ?C0019
+                                           ; SOURCE LINE # 52
+0035 1500        E     DEC     lcd+011H
+                                           ; SOURCE LINE # 53
+0037 8005              SJMP    ?C0020
+0039         ?C0019:
+                                           ; SOURCE LINE # 54
+0039 E500        E     MOV     A,lcd+012H
+003B 14                DEC     A
+003C F500        E     MOV     lcd+011H,A
+                                           ; SOURCE LINE # 55
+003E         ?C0020:
+                                           ; SOURCE LINE # 56
+003E         ?C0024:
+003E 5300FD      E     ANL     lcd+01FH,#0FDH
+                                           ; SOURCE LINE # 57
+                                           ; SOURCE LINE # 58
+                                           ; SOURCE LINE # 60
+                                           ; SOURCE LINE # 61
+                                           ; SOURCE LINE # 63
+                                           ; SOURCE LINE # 64
+                                           ; SOURCE LINE # 65
+                                           ; SOURCE LINE # 66
+0041         ?C0014:
+                                           ; SOURCE LINE # 67
+0041 E4                CLR     A
+0042 F500        R     MOV     key+04H,A
+                                           ; SOURCE LINE # 68
+0044         ?C0012:
+0044 22                RET     
+             ; FUNCTION handle_key (END)
+
+C51 COMPILER V9.56.0.0   KEY                                                               03/01/2021 16:54:13 PAGE 12  
+
+NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
+====                                    =====   ======  ====    ======  ====
+
+
+P0 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0080H  1
+P1 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0090H  1
+P2 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00A0H  1
+P3 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00B0H  1
+IEN0 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00A8H  1
+IEN1 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00B8H  1
+Lcd. . . . . . . . . . . . . . . . . .  * TAG *  -----  STRUCT   -----  32
+  gui_id . . . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0000H  1
+  buffer . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0001H  12
+  pos. . . . . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   000DH  1
+  str. . . . . . . . . . . . . . . . .  MEMBER   -----  PTR      000EH  3
+  err_index. . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0011H  1
+  err_len. . . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0012H  1
+  err_ids. . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0013H  12
+  on . . . . . . . . . . . . . . . . .  MEMBER   -----  FIELD    001FH  1.0
+  updated. . . . . . . . . . . . . . .  MEMBER   -----  FIELD    001FH  1.1
+S0CON2 . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00D8H  1
+handle_key . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+Key. . . . . . . . . . . . . . . . . .  * TAG *  -----  STRUCT   -----  9
+  up_count . . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0000H  1
+  down_count . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0001H  1
+  union_val. . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0002H  1
+  down_val . . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0003H  1
+  new_val. . . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0004H  1
+  gui_id . . . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0005H  1
+  product_id . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0006H  1
+  select_id. . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0007H  1
+  scan_tick. . . . . . . . . . . . . .  MEMBER   -----  FIELD    0008H  1.0
+  handler_tick . . . . . . . . . . . .  MEMBER   -----  FIELD    0008H  1.1
+lcd. . . . . . . . . . . . . . . . . .  EXTERN   DATA   STRUCT   -----  32
+TCON . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0088H  1
+key. . . . . . . . . . . . . . . . . .  PUBLIC   DATA   STRUCT   0000H  9
+scan_key . . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+S0CON. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0098H  1
+T2CON. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00C8H  1
+PSW. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00D0H  1
+IRCON. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00C0H  1
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    138    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      9    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

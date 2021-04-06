@@ -1,0 +1,5 @@
+".\Objects\OPTIONS_SN8F5702.obj",
+".\Objects\STARTUP.obj",
+".\Objects\Main.obj" 
+TO ".\Objects\RollingCode" 
+PRINT(".\Listings\RollingCode.m51") RAMSIZE(256) 
