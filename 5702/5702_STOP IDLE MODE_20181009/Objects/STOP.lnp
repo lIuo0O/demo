@@ -1,5 +1,0 @@
-".\Objects\Main.obj",
-".\Objects\STARTUP.obj",
-".\Objects\OPTIONS_SN8F5702.obj" 
-TO ".\Objects\STOP" 
-PRINT(".\Listings\STOP.m51") RAMSIZE(256) 

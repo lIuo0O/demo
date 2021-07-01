@@ -1,5 +1,0 @@
-".\Objects\WDT.obj",
-".\Objects\STARTUP.obj",
-".\Objects\OPTIONS_SN8F5702.obj" 
-TO ".\Objects\Reset_Flag" 
-PRINT(".\Listings\Reset_Flag.m51") RAMSIZE(256) 

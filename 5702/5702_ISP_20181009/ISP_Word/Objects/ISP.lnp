@@ -1,6 +1,0 @@
-".\Objects\STARTUP.obj",
-".\Objects\ISP.obj",
-".\Objects\Main.obj",
-".\Objects\OPTIONS_SN8F5702.obj" 
-TO ".\Objects\ISP" 
-PRINT(".\Listings\ISP.m51") RAMSIZE(256) 

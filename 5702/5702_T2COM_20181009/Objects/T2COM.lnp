@@ -1,6 +1,0 @@
-".\Objects\Main.obj",
-".\Objects\T2COM.obj",
-".\Objects\STARTUP.obj",
-".\Objects\OPTIONS_SN8F5702.obj" 
-TO ".\Objects\T2COM" 
-PRINT(".\Listings\T2COM.m51") RAMSIZE(256) 

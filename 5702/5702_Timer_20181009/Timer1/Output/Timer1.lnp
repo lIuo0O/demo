@@ -1,6 +1,0 @@
-".\Output\Main.obj",
-".\Output\Timer1.obj",
-".\Output\STARTUP.obj",
-".\Output\OPTIONS_SN8F5702.obj" 
-TO ".\Output\Timer1" 
-PRINT(".\LST\Timer1.m51") RAMSIZE(256) 

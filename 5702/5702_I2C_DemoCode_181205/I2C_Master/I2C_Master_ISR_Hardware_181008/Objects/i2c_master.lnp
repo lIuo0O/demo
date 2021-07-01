@@ -1,6 +1,0 @@
-".\Objects\STARTUP.obj",
-".\Objects\OPTIONS_SN8F5702.obj",
-".\Objects\main.obj",
-".\Objects\i2c_master.obj" 
-TO ".\Objects\i2c_master" 
-PRINT(".\Listings\i2c_master.m51") RAMSIZE(256) 
