@@ -1,0 +1,29 @@
+charge_protect
+	t0 scan the input_protect_pin, if it get a logic low signal, then
+enter the charge_protect procedure.
+
+discharge_protect
+	t0 scan the output_protect_pin, if get a logic low signal, then
+it trigger the discharge_protect procedure.
+
+bat_is_low
+	while system works, if detect the battery voltage is lower than the preset
+value, then let the led flash in orderly
+BAT_LOW_LEVEL, 
+
+bat_is_empty
+
+pwm_protect:
+	while moto soft starts, the pwm works, if exception occurs, then you
+need disable pwm, and shutdown the system.
+
+no matter what the user does , you have to response;
+
+H95, JW3653
+out_fuse  endure time to set protect flag
+
+fg moto feedback pwm count low and high endure time;
+
+
+I97, bat_protect_board let battery votage down to 2.6v
+so you must recover the voltage where charge
