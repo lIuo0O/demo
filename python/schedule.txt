@@ -1,0 +1,18 @@
+1. 	pip install cython
+	pip install kivy
+	pip install docutils
+	pip install pygments
+	pip install pypiwin32
+	pip install kivy.deps.sdl2
+	pip install kivy.deps.glew
+	
+	pip install buildozer
+
+2,  	pip3 install cython
+	pip3 install kivy
+	pip3 install libsdl2
+	pip3 install libsdl2-dev
+	pip3 install pygames
+
+	download android-skd
+	
